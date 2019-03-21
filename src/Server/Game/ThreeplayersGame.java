@@ -19,23 +19,14 @@
                 if (getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(1)).getSeed() &&
                         getTurnCards().get(getPlayersTurn().get(1)).getSeed() == getTurnCards().get(getPlayersTurn().get(2)).getSeed())
                     return getBestCardPlayer(getTurnCards());
-                else if (!(getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(1)).getSeed()) &&
-                        !(getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(2)).getSeed()))
-                    return getPlayersTurn().get(0);
-                else if ((getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(1)).getSeed()) &&
-                        !(getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(2)).getSeed())){
+                else {
                     playersTemp= new HashMap<>();
-                    playersTemp.put(getPlayersTurn().get(0), getTurnCards().get(getPlayersTurn().get(0)));
-                    playersTemp.put(getPlayersTurn().get(1), getTurnCards().get(getPlayersTurn().get(1)));
-                    return getBestCardPlayer(playersTemp);
-                }
-
-                else if ((getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(2)).getSeed()) &&
-                        !(getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(1)).getSeed())){
-                    playersTemp= new HashMap<>();
-                    playersTemp.put(getPlayersTurn().get(0), getTurnCards().get(getPlayersTurn().get(0)));
-                    playersTemp.put(getPlayersTurn().get(2), getTurnCards().get(getPlayersTurn().get(2)));
-                    return getBestCardPlayer(playersTemp);
+                    for (Map.Entry<Player, Card> entry : getTurnCards().entrySet()) {
+                        if(entry.getValue().getSeed() == getTurnCards().get(getPlayersTurn().get(0)).getSeed()) {
+                            playersTemp.put(entry.getKey(), entry.getValue());
+                        }
+                        return getBestCardPlayer(playersTemp);
+                    }
                 }
                 return null;
             }
@@ -59,7 +50,7 @@
                 maxScore=getMaxScoreCard(map);
                 numPlayerMaxScore=getNumPlayerMaxScoreCard(maxScore, map);
                 if (numPlayerMaxScore==1) return getMaxScorePlayer(maxScore, map);
-                else if (numPlayerMaxScore==2) {
+                else if (numPlayerMaxScore==2 || numPlayerMaxScore==3) {
                     maxNum=getMaxNumCard(map);
                     return getMaxNumPlayer(maxNum , map);
                 }
