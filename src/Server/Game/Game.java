@@ -274,7 +274,7 @@ public abstract class  Game {
     // that have played a card with briscola seed
     protected abstract Player getBestBriscolaPlayer();
 
-    //the method getBestCardPlayer returns turn winner Player, the one who has played the card with highest score
+    //the method getBestCardPlayer returns turn-winner Player, the one who has played the card with highest score
     //or the highest number if there are more cards with the same score
     protected abstract Player getBestCardPlayer(Map<Player, Card> map);
 
