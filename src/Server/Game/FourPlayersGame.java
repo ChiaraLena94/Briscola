@@ -11,6 +11,10 @@ public class FourPlayersGame extends Game {
 
     public FourPlayersGame(int numPlayers) {
         super(numPlayers);
+        getPlayersTurn().get(0).setTeam("team1");
+        getPlayersTurn().get(2).setTeam("team1");
+        getPlayersTurn().get(1).setTeam("team2");
+        getPlayersTurn().get(3).setTeam("team2");
     }
 
     //the method getBestNotBriscolaPlayer returns an object Player that is the winner of the turn if no one has played
@@ -117,22 +121,11 @@ public class FourPlayersGame extends Game {
     //it returns null if the game ends in a tie
     @Override
     protected Player getGameWinner(){
-        if (getPlayersTurn().get(0).getPoints()> getPlayersTurn().get(1).getPoints() &&
-            getPlayersTurn().get(0).getPoints()> getPlayersTurn().get(2).getPoints() &&
-            getPlayersTurn().get(0).getPoints()> getPlayersTurn().get(3).getPoints())
+        if (getPlayersTurn().get(0).getPoints()> getPlayersTurn().get(1).getPoints())
             return getPlayersTurn().get(0);
-        else if (getPlayersTurn().get(1).getPoints()> getPlayersTurn().get(2).getPoints() &&
-                getPlayersTurn().get(1).getPoints()> getPlayersTurn().get(0).getPoints() &&
-                getPlayersTurn().get(1).getPoints()> getPlayersTurn().get(3).getPoints())
+        else if (getPlayersTurn().get(1).getPoints()> getPlayersTurn().get(0).getPoints()){
             return getPlayersTurn().get(1);
-        else if (getPlayersTurn().get(2).getPoints()> getPlayersTurn().get(1).getPoints() &&
-                getPlayersTurn().get(2).getPoints()> getPlayersTurn().get(0).getPoints() &&
-                getPlayersTurn().get(2).getPoints()> getPlayersTurn().get(3).getPoints())
-            return getPlayersTurn().get(2);
-        else if (getPlayersTurn().get(3).getPoints()> getPlayersTurn().get(1).getPoints() &&
-                getPlayersTurn().get(3).getPoints()> getPlayersTurn().get(0).getPoints() &&
-                getPlayersTurn().get(3).getPoints()> getPlayersTurn().get(2).getPoints())
-            return getPlayersTurn().get(3);
+        }
         return null;
     }
 

@@ -11,16 +11,26 @@ import java.util.List;
 
 public class Player extends UnicastRemoteObject implements PlayerInterface {
     private int points;
-
+    private String team;
     private String username;
 
     private ClientInterface clientPlayer;
     private Game game;
+
     public Player(String username, ClientInterface clientInterface, Game game) throws RemoteException {
         this.username = username;
         this.clientPlayer = clientInterface;
         this.points = 0;
         this.game = game;
+        this.team="noTeam";
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 
     public ClientInterface getClientPlayer() {

@@ -234,7 +234,10 @@ public abstract class  Game {
 
     public void finishGame(){
         try{
-            endGame(getGameWinner().getUsername());
+            if (getNumPlayers() == 4)
+               endGame(getGameWinner().getTeam());
+           else
+               endGame(getGameWinner().getUsername());
         }
         catch (NullPointerException e){
             endGame("TIE");
