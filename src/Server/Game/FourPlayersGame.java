@@ -1,26 +1,22 @@
 package Server.Game;
 
 import Core.Card;
-import Core.EnumHandler;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FourPlayersGame extends Game {
-    private int numPlayerMaxCard;
-    private EnumHandler enumHandler;
     private Map<Player, Card> playersTemp;
-
 
     public FourPlayersGame(int numPlayers) {
         super(numPlayers);
     }
 
-    //il metodo getBestNotBriscolaPlayer restiruisce il giocatore vincitore nel caso in cui nessuno dei giocatori
-    //abbia tirato una briscola. Distingue diversi casi in base al seme delle carte giocate
-    private Player getBestNotBriscolaPlayer() {
+    //the method getBestNotBriscolaPlayer returns an object Player that is the winner of the turn if no one has played
+    //a card with briscola seed. it analizes different cases based on the seeds of the cards
+    @Override
+    protected Player getBestNotBriscolaPlayer() {
         if (getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(1)).getSeed() &&
                 getTurnCards().get(getPlayersTurn().get(1)).getSeed() == getTurnCards().get(getPlayersTurn().get(2)).getSeed() &&
                 getTurnCards().get(getPlayersTurn().get(2)).getSeed() == getTurnCards().get(getPlayersTurn().get(3)).getSeed() )
@@ -31,15 +27,16 @@ public class FourPlayersGame extends Game {
                 if(entry.getValue().getSeed() == getTurnCards().get(getPlayersTurn().get(0)).getSeed()) {
                     playersTemp.put(entry.getKey(), entry.getValue());
                 }
-            return getBestCardPlayer(playersTemp);
+                return getBestCardPlayer(playersTemp);
             }
         }
         return null;
     }
 
-    //il metodo getBestBriscolaPlayer mi permette di ottenere il giocatore con la carta vincente tra i due
-    // che hanno giocato una briscola
-    private Player getBestBriscolaPlayer(){
+    //the method getBestBriscolaPlayer returns turn winner Player between all players
+    // that have played a card with briscola seed
+    @Override
+    protected Player getBestBriscolaPlayer(){
         playersTemp= new HashMap<>();
         for (Map.Entry<Player, Card> entry : getTurnCards().entrySet()) {
             if(entry.getValue().getSeed() == getBriscola()) {
@@ -49,9 +46,10 @@ public class FourPlayersGame extends Game {
         return getBestCardPlayer(playersTemp);
     }
 
-    //il metodo getBestCardPlayer mi permette di ottenere il giocatore che ha giocato la carta con score più alto
-    //a parità di score restituisce il gioctore che ha tirato la carta con num più alto
-    private Player getBestCardPlayer(Map<Player, Card> map) {
+    //the method getBestCardPlayer returns turn winner Player, the one who has played the card with highest score
+    //or the highest number if there are more cards with the same score
+    @Override
+    protected Player getBestCardPlayer(Map<Player, Card> map) {
         int maxScore, numPlayerMaxScore, maxNum;
         maxScore=getMaxScoreCard(map);
         numPlayerMaxScore=getNumPlayerMaxScoreCard(maxScore, map);
@@ -63,63 +61,7 @@ public class FourPlayersGame extends Game {
         return null;
     }
 
-    //il metodo getMaxScoreCard mi restituisce lo score più alto tra le carte presenti nella mappa passata
-    private int getMaxScoreCard(Map<Player, Card> map) {
-        int maxScoreCard = 0;
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if ((enumHandler.getScoreMap().get(entry.getValue().getScore()))- maxScoreCard > 0) {
-                maxScoreCard = enumHandler.getScoreMap().get(entry.getValue().getScore());
-            }
-        }
-        return maxScoreCard;
-    }
-
-    //il metodo getScorePlayerMaxCard restituisce il numero di giocatori nella mappa passata che hanno tirato
-    // una carta dello score massimo passato
-    private int getNumPlayerMaxScoreCard (int maxScore, Map<Player, Card> map){
-        numPlayerMaxCard = 0;
-        map.forEach((player,card) -> {
-            if(enumHandler.getScoreMap().get(card.getScore())== maxScore) {
-                numPlayerMaxCard +=1;
-            }
-        });
-        return numPlayerMaxCard;
-    }
-
-    //il metodo getMaxScorePlayer restituisce il giocatore nella mappa passata che ha score massimo passato
-    private Player getMaxScorePlayer (int maxScore, Map<Player, Card> map) {
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if(enumHandler.getScoreMap().get(entry.getValue().getScore()) == maxScore) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    //il metodo getMaxNumCard mi restituisce il num più alto tra le carte presenti nella mappa passata
-    private int getMaxNumCard(Map<Player, Card> map) {
-        int  maxNumCard=0;
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if ((enumHandler.getNumberMap().get(entry.getValue().getNum()))- maxNumCard > 0) {
-                maxNumCard = enumHandler.getNumberMap().get(entry.getValue().getNum());
-            }
-        }
-        return maxNumCard;
-    }
-
-    //il metodo getMaxNumPlayer restituisce giocatore nella mappa passata che ha num massimo passato
-    private Player getMaxNumPlayer (int maxNum, Map<Player, Card> map) {
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if(enumHandler.getNumberMap().get(entry.getValue().getNum()) == maxNum) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-
-
-    //il metodo getWinner mi permette di ottenere il giocatore vincitore del turno
+    //the method getWinner returns the player who has won the turn
     @Override
     protected Player getWinner() {
         switch(getNumBriscole()) {
@@ -138,8 +80,8 @@ public class FourPlayersGame extends Game {
         }
     }
 
-    //il metodo reorderPlayersTurn restituisce una lista ordinata secondo
-    // il nuovo ordine stabilito dal vincitore del turno
+    //the method reorderPlayersTurn returns an ordered list with the new order
+    //this new order starts from the winner of the turn
     @Override
     protected List<Player> reorderPlayersTurn() {
         List<Player> newOrder= new ArrayList<>();
@@ -170,9 +112,9 @@ public class FourPlayersGame extends Game {
         return newOrder;
     }
 
-
-    //il metodo getGameWinner restituiusce l'oggetto player vincitore, ovvero con più punti a fine partita
-    //restituisce invece null se la partita finisce in pareggio
+    //the method getGameWinner returns an object Player who is the winner of the game.
+    //it returns tha player who has the highest number of points at the end of the game
+    //it returns null if the game ends in a tie
     @Override
     protected Player getGameWinner(){
         if (getPlayersTurn().get(0).getPoints()> getPlayersTurn().get(1).getPoints() &&
@@ -193,6 +135,5 @@ public class FourPlayersGame extends Game {
             return getPlayersTurn().get(3);
         return null;
     }
-
 
 }

@@ -4,7 +4,6 @@ import Core.Card;
 import Core.Deck;
 import Core.EnumHandler;
 import Core.Seed;
-
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -19,6 +18,7 @@ public abstract class  Game {
     private int pointsInTurn;
     private EnumHandler enumHandler;
     private int numBriscole;
+    private int numPlayerMaxCard;
 
     public int getNumBriscole() {
         return numBriscole;
@@ -98,7 +98,6 @@ public abstract class  Game {
         }
     }
 
-
     private void sendDeckToPlayer() {
         players.forEach((k,v) -> {
             try {
@@ -140,10 +139,76 @@ public abstract class  Game {
         });
     }
 
+    //the method getMaxScoreCard returns the highest score between all the cards in a map
+    //this map is passed as a parameter to the method
+    public int getMaxScoreCard(Map<Player, Card> map) {
+        int maxScoreCard = 0;
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if ((enumHandler.getScoreMap().get(entry.getValue().getScore()))- maxScoreCard > 0) {
+                maxScoreCard = enumHandler.getScoreMap().get(entry.getValue().getScore());
+            }
+        }
+        return maxScoreCard;
+    }
+
+    //the method getScorePlayerMaxCard returns the number of players in the passed map who have played a card
+    //with a certain score (that is passed to the method)
+    public int getNumPlayerMaxScoreCard (int maxScore, Map<Player, Card> map){
+        numPlayerMaxCard = 0;
+        map.forEach((player,card) -> {
+            if(enumHandler.getScoreMap().get(card.getScore())== maxScore) {
+                numPlayerMaxCard +=1;
+            }
+        });
+        return numPlayerMaxCard;
+    }
+
+    //the method getMaxScorePlayer returns the Player who has played the card with highest score
+    public Player getMaxScorePlayer (int maxScore, Map<Player, Card> map) {
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if(enumHandler.getScoreMap().get(entry.getValue().getScore()) == maxScore) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    //the method getMaxNumCard returns the highest number between all the cards in a map
+    //this map is passed as a parameter to the method
+    public int getMaxNumCard(Map<Player, Card> map) {
+        int  maxNumCard=0;
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if ((enumHandler.getNumberMap().get(entry.getValue().getNum()))- maxNumCard > 0) {
+                maxNumCard = enumHandler.getNumberMap().get(entry.getValue().getNum());
+            }
+        }
+        return maxNumCard;
+    }
+
+    //the method getMaxNumPlayer returns the Player who has played the card with highest number
+    public Player getMaxNumPlayer (int maxNum, Map<Player, Card> map) {
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if(enumHandler.getNumberMap().get(entry.getValue().getNum()) == maxNum) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     public void endTurn() throws RemoteException {
         setNumBriscole(0);
         setNumberOfBriscoleInThisTurn();
-        getWinner().addPoints(getTurnPoints());
+        if (getNumPlayers()==4) {
+            if (getWinner()==getPlayersTurn().get(0) || getWinner()==getPlayersTurn().get(2)){
+                getPlayersTurn().get(0).addPoints(getTurnPoints());
+                getPlayersTurn().get(2).addPoints(getTurnPoints());
+                }
+            else {
+                getPlayersTurn().get(1).addPoints(getTurnPoints());
+                getPlayersTurn().get(3).addPoints(getTurnPoints());
+            }
+        }
+        else getWinner().addPoints(getTurnPoints());
         if (!getDeck().isEmpty()) {
             playersTurn = reorderPlayersTurn();
             for (int i=0; i<getPlayersTurn().size(); i++)
@@ -197,8 +262,28 @@ public abstract class  Game {
     }
 
 
-    protected abstract Player getGameWinner();
-    protected abstract List<Player> reorderPlayersTurn();
+
+    //the method getBestNotBriscolaPlayer returns an object Player that is the winner of the turn if no one has played
+    //a card with briscola seed. it analizes different cases based on the seeds of the cards
+    protected abstract Player getBestNotBriscolaPlayer();
+
+    //the method getBestBriscolaPlayer returns turn winner Player between all players
+    // that have played a card with briscola seed
+    protected abstract Player getBestBriscolaPlayer();
+
+    //the method getBestCardPlayer returns turn winner Player, the one who has played the card with highest score
+    //or the highest number if there are more cards with the same score
+    protected abstract Player getBestCardPlayer(Map<Player, Card> map);
+
+    //the method getWinner returns the player who has won the turn
     protected abstract Player getWinner();
 
+    //the method reorderPlayersTurn returns an ordered list with the new order
+    //this new order starts from the winner of the turn
+    protected abstract List<Player> reorderPlayersTurn();
+
+    //the method getGameWinner returns an object Player who is the winner of the game.
+    //it returns tha player who has the highest number of points at the end of the game
+    //it returns null if the game ends in a tie
+    protected abstract Player getGameWinner();
 }
