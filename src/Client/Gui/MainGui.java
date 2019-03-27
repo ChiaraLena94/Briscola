@@ -19,10 +19,10 @@ public class MainGui extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage=primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("QUI VA FXML DELLA PRIMA SCHERMATA"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/launcher.fxml"));
         primaryStage.setTitle("Briscola");
-        Scene scene=new Scene(root);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(root, 800, 600));
+
         primaryStage.centerOnScreen();
         //TUTTE LE OPZIONI DI GRAFICA
         primaryStage.show();
