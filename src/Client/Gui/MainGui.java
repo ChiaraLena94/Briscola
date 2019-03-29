@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class MainGui extends Application {
@@ -24,7 +25,7 @@ public class MainGui extends Application {
         primaryStage.setScene(new Scene(root, 800, 600));
 
         primaryStage.centerOnScreen();
-        //TUTTE LE OPZIONI DI GRAFICA
+        //primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
 
     }
