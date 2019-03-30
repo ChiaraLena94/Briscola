@@ -13,6 +13,7 @@ public class Main {
             registry = LocateRegistry.createRegistry(1099);
             Server server = new Server();
             registry.bind("serverBriscola", server);
+            System.out.println("I'm waiting for someone...");
         } catch (RemoteException | AlreadyBoundException e) {
             e.printStackTrace();
         }

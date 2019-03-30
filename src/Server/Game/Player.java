@@ -1,7 +1,6 @@
 package Server.Game;
 
 import Core.Card;
-import Core.Deck;
 import api.ClientInterface;
 import api.PlayerInterface;
 

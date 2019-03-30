@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,14 +11,37 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #0a3908;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Gui.controllers.LoginController">
     <children>
-        <ImageView fx:id="startImage" fitWidth="500.0" layoutY="0.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="startImage" fitWidth="600.0" layoutX="140.0" layoutY="0.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Resources/BASE%20effetto%20finito.png" />
+            <Image url="@../Resources/BASEeffettofinito.png" />
          </image></ImageView>
-        <Button fx:id="startButton" layoutX="329.0" layoutY="364.0" mnemonicParsing="false" onAction="#play" prefHeight="72.0" prefWidth="142.0" text="Login" textAlignment="CENTER" AnchorPane.bottomAnchor="164.0" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="329.0" AnchorPane.topAnchor="364.0">
+        <Button fx:id="loginButton" alignment="CENTER" layoutX="440.0" layoutY="450.0" mnemonicParsing="false" onAction="#login" prefHeight="72.0" prefWidth="142.0" text="Login" textAlignment="CENTER">
             <font>
                 <Font name="Rockwell" size="24.0" />
             </font>
         </Button>
+      <Label alignment="CENTER" layoutX="210.0" layoutY="269.0" text="Insert your username" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
+         <font>
+            <Font name="Rockwell" size="36.0" />
+         </font>
+      </Label>
+      <TextField fx:id="username" alignment="CENTER" layoutX="256.0" layoutY="334.0" prefHeight="57.0" prefWidth="206.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" />
+      <RadioButton fx:id="choice2" layoutX="205.0" layoutY="450.0" mnemonicParsing="false" onAction="#submitChoice" text="2" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></RadioButton>
+      <RadioButton fx:id="choice3" layoutX="205.0" layoutY="480.0" mnemonicParsing="false" onAction="#submitChoice" text="3" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="14.0" />
+         </font></RadioButton>
+      <RadioButton fx:id="choice4" layoutX="205.0" layoutY="510.0" mnemonicParsing="false" onAction="#submitChoice" text="4" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="14.0" />
+         </font></RadioButton>
+      <Label layoutX="150.0" layoutY="416.0" text="Choose the number of players" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="18.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

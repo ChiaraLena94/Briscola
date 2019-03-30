@@ -9,7 +9,7 @@ import java.util.*;
 
 public abstract class  Game {
     private int numPlayers;
-    private Boolean isFull;
+    private Boolean isFull=false;
     private Map<Integer, Player> players;
     private Seed briscola;
     private Deck deck;

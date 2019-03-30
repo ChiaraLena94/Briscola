@@ -21,6 +21,8 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     private PlayerInterface playerInterface;
     private Deck deck;
     private List<Card> hand;
+    private static Client instance;
+    private boolean logged=false;
 
     protected Client(String username) throws RemoteException {
         this.username = username;
@@ -36,6 +38,25 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         playerInterface = server.enterGame(username, numPlayers, this);
     }
 
+    /**
+     * esegue il login ritornando vero se a buon fine, falso altrimenti
+     */
+    public void login(String username, int numPlayers){
+        try {
+            playerInterface = server.login(username, numPlayers, this);
+            logged = true;
+            System.out.println("Ottengo Player Briscola");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static Client createInstance(String username) throws RemoteException {
+        System.out.println("sono nel client e adesso creo il client. username: "+username);
+        instance = new Client(username);
+        return instance;
+    }
 
     @Override
     public void receiveHand(List<Card> hand) throws RemoteException {
@@ -45,7 +66,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void selectCard() throws RemoteException {
-
         //chiami un metodo su main gui player per dirgli è il tuo turno.
 
     }
