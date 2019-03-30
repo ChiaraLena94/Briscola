@@ -23,7 +23,6 @@ public class MainGui extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("fxml/launcher.fxml"));
         primaryStage.setTitle("Briscola");
         primaryStage.setScene(new Scene(root, 800, 600));
-
         primaryStage.centerOnScreen();
         //primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();

@@ -1,18 +1,19 @@
 package Client.Gui.controllers;
 
+import Client.Gui.GameGui;
 import Client.Gui.animations.FadeAnimation;
 import Client.Gui.animations.RotateAnimation;
 import Client.Gui.animations.ScaleAnimation;
 import Client.Gui.animations.TranslateAnimation;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,6 +22,7 @@ public class LauncherController implements Initializable {
     private TranslateAnimation translateSword, translateCup, translateGold, translateStick;
     private RotateAnimation rotateSword, rotateCup, rotateGold, rotateStick;
     private ScaleAnimation scaleUp,scaleDown;
+    private GameGui gameGui;
 
     @FXML
     public Button startButton;
@@ -48,8 +50,6 @@ public class LauncherController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         startButton.setCursor(Cursor.HAND);
         initializeScaleAnimation();
-        System.out.println("ho fatto initializefadeanimation");
-
     }
 
     private void initializeScaleAnimation() {
@@ -92,4 +92,12 @@ public class LauncherController implements Initializable {
         rotateStick = new RotateAnimation(Duration.seconds(1.5), stickImage);
         rotateStick.playAnimation();
     }
+
+
+    public void play (ActionEvent actionEvent) throws IOException {
+        gameGui.createGameGui();
+    }
+
+
+
 }

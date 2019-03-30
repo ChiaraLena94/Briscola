@@ -16,7 +16,7 @@
          <viewport>
             <Rectangle2D height="320.0" width="767.0" />
          </viewport></ImageView>
-      <Button fx:id="startButton" layoutX="329.0" layoutY="364.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="142.0" text="Play" textAlignment="CENTER" AnchorPane.bottomAnchor="164.0" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="329.0" AnchorPane.topAnchor="364.0">
+      <Button fx:id="startButton" layoutX="329.0" layoutY="364.0" mnemonicParsing="false" onAction="#play" prefHeight="72.0" prefWidth="142.0" text="Play" textAlignment="CENTER" AnchorPane.bottomAnchor="164.0" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="329.0" AnchorPane.topAnchor="364.0">
          <font>
             <Font name="Rockwell" size="24.0" />
          </font>
