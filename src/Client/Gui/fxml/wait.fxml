@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Gui.controllers.WaitController">
    <children>
-      <ImageView fx:id="buffer" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="225.0">
+      <ImageView fx:id="buffer" fitHeight="150.0" fitWidth="200.0" layoutX="300.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="325.0">
          <image>
             <Image url="@../Resources/buffering.png" />
          </image>
       </ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="215.0" layoutY="119.0" text="Waiting for other players">
+         <font>
+            <Font name="Rockwell" size="36.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

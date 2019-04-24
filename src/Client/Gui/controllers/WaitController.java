@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,4 +26,5 @@ public class WaitController implements Initializable {
         rotateBuffer.getRotateTransition().setCycleCount(100);
         rotateBuffer.playAnimation();
     }
+
 }

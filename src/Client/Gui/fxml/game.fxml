@@ -5,15 +5,15 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #0a3908;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Gui.controllers.GameController">
    <children>
-      <ImageView fx:id="briscola" fitHeight="125.0" fitWidth="200.0" layoutX="230.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <ImageView fx:id="briscola" fitHeight="125.0" fitWidth="200.0" layoutX="230.0" layoutY="275.0" onMouseEntered="#zoomImageBriscola" onMouseExited="#zoomImageBriscola" pickOnBounds="true" preserveRatio="true" rotate="90.0">
       </ImageView>
       <ImageView fx:id="adv1Left" fitHeight="100.0" fitWidth="200.0" layoutX="375.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" rotate="340.0">
       </ImageView>
-      <ImageView fx:id="myLeft" fitHeight="150.0" fitWidth="200.0" layoutX="360.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" rotate="340.0">
+      <ImageView fx:id="myLeft" fitHeight="150.0" fitWidth="200.0" layoutX="360.0" layoutY="520.0" onMouseEntered="#zoomImageLeft" onMouseExited="#zoomImageLeft" pickOnBounds="true" preserveRatio="true" rotate="340.0">
       </ImageView>
-      <ImageView fx:id="myCenter" fitHeight="150.0" layoutX="425.0" layoutY="510.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="myCenter" fitHeight="150.0" layoutX="425.0" layoutY="510.0" onMouseEntered="#zoomImageCenter" onMouseExited="#zoomImageCenter" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-      <ImageView fx:id="myRight" fitHeight="150.0" fitWidth="200.0" layoutX="490.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" rotate="20.0">
+      <ImageView fx:id="myRight" fitHeight="150.0" fitWidth="200.0" layoutX="490.0" layoutY="520.0" onMouseEntered="#zoomImageRight" onMouseExited="#zoomImageRight" pickOnBounds="true" preserveRatio="true" rotate="20.0">
       </ImageView>
       <ImageView fx:id="adv1Center" fitHeight="100.0" fitWidth="200.0" layoutX="425.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
