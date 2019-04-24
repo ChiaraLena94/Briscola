@@ -45,7 +45,7 @@ public class LoginController implements Initializable {
         if (numPlayers==2 || numPlayers==3 || numPlayers==4) {
             username.getText();
             System.out.println("sono dentro il login in loginController. numPlayers è: " + numPlayers);
-            System.out.println("sono in login in logincontrooler e username è: " + username.getText());
+            System.out.println("sono in login in logincontroller e username è: " + username.getText());
             if (usernameEmpty()) {
                 return;
             }
@@ -61,6 +61,7 @@ public class LoginController implements Initializable {
                 waitStage = new Stage();
                 waitStage.setScene(new Scene(root, 800, 600));
                 waitStage.centerOnScreen();
+                clientBriscola.setBufferStage(waitStage);
                 MainGui.getPrimaryStage().close();
                 waitStage.show();
             }

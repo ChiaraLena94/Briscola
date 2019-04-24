@@ -16,7 +16,7 @@ public class Card implements Serializable {
         this.score = score;
     }
 
-    public int id(){
+    public int getId(){
         return id;
     }
 

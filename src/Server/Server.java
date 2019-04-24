@@ -72,7 +72,6 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     @Override
     public synchronized PlayerInterface login(String username, int numPlayers, ClientInterface clientInterface) throws RemoteException {
-        System.out.println("SONO UN FICO");
         return enterGame(username, numPlayers, clientInterface);
     }
 

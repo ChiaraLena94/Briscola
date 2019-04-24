@@ -1,6 +1,6 @@
 package Client.Gui.controllers;
 
-import Client.Gui.GameGui;
+import Client.Gui.LoginGui;
 import Client.Gui.animations.FadeAnimation;
 import Client.Gui.animations.RotateAnimation;
 import Client.Gui.animations.ScaleAnimation;
@@ -22,7 +22,7 @@ public class LauncherController implements Initializable {
     private TranslateAnimation translateSword, translateCup, translateGold, translateStick;
     private RotateAnimation rotateSword, rotateCup, rotateGold, rotateStick;
     private ScaleAnimation scaleUp,scaleDown;
-    private GameGui gameGui;
+    private LoginGui loginGui;
 
     @FXML
     public Button startButton;
@@ -95,7 +95,7 @@ public class LauncherController implements Initializable {
 
 
     public void play (ActionEvent actionEvent) throws IOException {
-        gameGui.createGameGui();
+        loginGui.createLoginGui();
     }
 
 

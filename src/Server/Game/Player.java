@@ -1,6 +1,7 @@
 package Server.Game;
 
 import Core.Card;
+import Core.Seed;
 import api.ClientInterface;
 import api.PlayerInterface;
 
@@ -64,5 +65,10 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     @Override
     public Card drawCard() throws RemoteException {
        return game.getDeck().drawCard() ;
+    }
+
+    @Override
+    public Card getBriscolaCard() throws RemoteException {
+        return game.getDeck().getBriscola();
     }
 }

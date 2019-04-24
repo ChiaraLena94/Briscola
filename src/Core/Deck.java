@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Deck {
     private List<Card> deck;
+    private Card briscolaCard;
 
     public Deck(Boolean normalDeck){
         initializeDeck();
@@ -12,8 +13,8 @@ public class Deck {
         shuffleDeck();
     }
 
-    public Seed getBriscola(){
-        return deck.get(0).getSeed();
+    public Card getBriscola(){
+        return deck.get(0);
     }
 
     private void shuffleDeck(){

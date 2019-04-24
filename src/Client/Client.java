@@ -5,7 +5,13 @@ import Core.Deck;
 import api.ClientInterface;
 import api.PlayerInterface;
 import api.ServerInterface;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -21,8 +27,10 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     private PlayerInterface playerInterface;
     private Deck deck;
     private List<Card> hand;
-    private static Client instance;
     private boolean logged=false;
+    private Stage bufferStage=null;
+    private Stage gameStage=null;
+    private static Client instance;
 
     protected Client(String username) throws RemoteException {
         this.username = username;
@@ -32,6 +40,14 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Card> getHand() {
+        return hand;
+    }
+
+    public PlayerInterface getPlayerInterface() {
+        return playerInterface;
     }
 
     public void enterGame(int numPlayers) throws RemoteException {
@@ -51,17 +67,34 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         }
     }
 
-
-    public static Client createInstance(String username) throws RemoteException {
-        System.out.println("sono nel client e adesso creo il client. username: "+username);
-        instance = new Client(username);
-        return instance;
+    public void setBufferStage(Stage bufferStage){
+        this.bufferStage=bufferStage;
     }
+
+    public void createGameStage() {
+        gameStage=new Stage();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("Gui/fxml/game.fxml"));
+            Scene scene= new Scene(root);
+            gameStage.setScene(scene);
+            gameStage.centerOnScreen();
+            gameStage.setTitle(this.username);
+            gameStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void receiveHand(List<Card> hand) throws RemoteException {
         this.hand=hand;
-        // put this deck in the graphics e far pescare le carte ai giocatori a
+        Platform.runLater(
+                () -> {
+                    bufferStage.close();
+                    createGameStage();
+                }
+        );
     }
 
     @Override
@@ -89,4 +122,12 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     }
 
 
+    public static Client getInstance(){
+        return instance;
+    }
+
+    public static Client createInstance(String username) throws RemoteException {
+        instance = new Client(username);
+        return instance;
+    }
 }

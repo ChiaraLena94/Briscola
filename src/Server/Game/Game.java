@@ -80,6 +80,7 @@ public abstract class  Game {
 
     public void addPlayer(Player p) {
         players.put(players.size()+1,p);
+        System.out.println("sono nel game in addPlayer, numPlayer: " +numPlayers+ "game: " +this);
         if(players.size() == numPlayers) {
             setFull(true);
             startGame();

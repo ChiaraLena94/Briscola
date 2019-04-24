@@ -9,16 +9,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class GameGui {
+public class LoginGui {
     private Pane root;
 
 
-    public GameGui() {
+    public LoginGui() {
         this.root =new Pane();
     }
 
     /**
-     * metodo che crea il Pane del login e scelta del gioco, e viene richiamato nel metodo createGameGui, per poi passarlo nella
+     * metodo che crea il Pane del login e scelta del gioco, e viene richiamato nel metodo createLoginGui, per poi passarlo nella
      * funzione Lambda Platform.runLater() -> e farlo diventare la nuova Scene
      */
 
@@ -29,9 +29,9 @@ public class GameGui {
     }
 
 
-    public static void createGameGui() throws IOException {
-        GameGui gameGui =new GameGui();
-        Parent window = gameGui.createContent();
+    public static void createLoginGui() throws IOException {
+        LoginGui loginGui =new LoginGui();
+        Parent window = loginGui.createContent();
         Platform.runLater(()->{
             Stage stage = MainGui.getPrimaryStage();
             Scene scene= new Scene(window);
