@@ -5,21 +5,41 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #0a3908;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Gui.controllers.GameController">
    <children>
+      <ImageView fx:id="adv4Right" fitHeight="100.0" layoutX="45.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true" rotate="250.0">
+      </ImageView>
+      <ImageView fx:id="adv3Right" fitHeight="100.0" layoutX="890.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" rotate="250.0">
+      </ImageView>
       <ImageView fx:id="briscola" fitHeight="125.0" fitWidth="200.0" layoutX="230.0" layoutY="275.0" onMouseEntered="#zoomImageBriscola" onMouseExited="#zoomImageBriscola" pickOnBounds="true" preserveRatio="true" rotate="90.0">
       </ImageView>
       <ImageView fx:id="adv1Left" fitHeight="100.0" fitWidth="200.0" layoutX="375.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" rotate="340.0">
       </ImageView>
-      <ImageView fx:id="myLeft" fitHeight="150.0" fitWidth="200.0" layoutX="360.0" layoutY="520.0" onMouseEntered="#zoomImageLeft" onMouseExited="#zoomImageLeft" pickOnBounds="true" preserveRatio="true" rotate="340.0">
+      <ImageView fx:id="myLeft" fitHeight="150.0" fitWidth="200.0" layoutX="360.0" layoutY="520.0" onMouseClicked="#chooseCardLeft" onMouseEntered="#zoomImageLeft" onMouseExited="#zoomImageLeft" pickOnBounds="true" preserveRatio="true" rotate="340.0">
       </ImageView>
-      <ImageView fx:id="myCenter" fitHeight="150.0" layoutX="425.0" layoutY="510.0" onMouseEntered="#zoomImageCenter" onMouseExited="#zoomImageCenter" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="myCenter" fitHeight="150.0" layoutX="425.0" layoutY="510.0" onMouseClicked="#chooseCardCenter" onMouseEntered="#zoomImageCenter" onMouseExited="#zoomImageCenter" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-      <ImageView fx:id="myRight" fitHeight="150.0" fitWidth="200.0" layoutX="490.0" layoutY="520.0" onMouseEntered="#zoomImageRight" onMouseExited="#zoomImageRight" pickOnBounds="true" preserveRatio="true" rotate="20.0">
+      <ImageView fx:id="myRight" fitHeight="150.0" fitWidth="200.0" layoutX="490.0" layoutY="520.0" onMouseClicked="#chooseCardRight" onMouseEntered="#zoomImageRight" onMouseExited="#zoomImageRight" pickOnBounds="true" preserveRatio="true" rotate="20.0">
       </ImageView>
       <ImageView fx:id="adv1Center" fitHeight="100.0" fitWidth="200.0" layoutX="425.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
       <ImageView fx:id="adv1Right" fitHeight="100.0" layoutX="475.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" rotate="20.0">
       </ImageView>
       <ImageView fx:id="deck" fitHeight="125.0" fitWidth="200.0" layoutX="200.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="cardPlayer1" fitHeight="150.0" layoutX="370.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="cardPlayer2" fitHeight="150.0" layoutX="470.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="cardPlayer3" fitHeight="150.0" layoutX="570.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="cardPlayer4" fitHeight="150.0" layoutX="670.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="adv3Center" fitHeight="100.0" layoutX="900.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
+      </ImageView>
+      <ImageView fx:id="adv3Left" fitHeight="100.0" layoutX="890.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true" rotate="290.0">
+      </ImageView>
+      <ImageView fx:id="adv4Center" fitHeight="100.0" layoutX="40.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
+      </ImageView>
+      <ImageView fx:id="adv4Left" fitHeight="100.0" layoutX="45.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" rotate="290.0">
       </ImageView>
    </children>
 </AnchorPane>

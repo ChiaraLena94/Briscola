@@ -59,6 +59,7 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
 
     @Override
     public void turnCard(Card card) throws RemoteException {
+        System.out.println("sono nel player" +username+", adesso aggiungo la carta a turnCards");
        game.addCardToTurn(card,this);
     }
 
@@ -70,5 +71,10 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     @Override
     public Card getBriscolaCard() throws RemoteException {
         return game.getDeck().getBriscola();
+    }
+
+    @Override
+    public int getNumPlayersInGame() throws RemoteException {
+        return game.getNumPlayers();
     }
 }

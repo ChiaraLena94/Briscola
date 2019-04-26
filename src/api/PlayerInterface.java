@@ -13,4 +13,6 @@ public interface PlayerInterface extends Remote {
     public Card drawCard() throws RemoteException;
 
     public Card getBriscolaCard() throws RemoteException;
+
+    public int getNumPlayersInGame() throws RemoteException;
 }

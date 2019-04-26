@@ -1,5 +1,7 @@
 package Client.Gui;
 
+import Core.Card;
+
 import java.util.HashMap;
 import java.util.Map;
 

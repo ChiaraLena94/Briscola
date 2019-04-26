@@ -48,6 +48,7 @@ public class TwoPlayersGame extends Game {
     //the method getWinner returns the player who has won the turn
     @Override
     protected Player getWinner() {
+        System.out.println("sono in getWinner e le carte in turno sono "+getTurnCards().size());
         switch(getNumBriscole()) {
             case 0:
                 return getBestNotBriscolaPlayer();

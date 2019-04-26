@@ -127,9 +127,10 @@ public abstract class  Game {
 
     public int getTurnPoints() {
         pointsInTurn = 0;
-        getTurnCards().forEach((player,card) -> {
-            pointsInTurn += enumHandler.getScoreMap().get(card.getScore());
-        });
+        System.out.println("sono in get turn points e stampo il numero di carte in turno "+getTurnCards().size());
+        for (Map.Entry<Player, Card> entry : getTurnCards().entrySet()) {
+            pointsInTurn += enumHandler.getScoreMap().get(entry.getValue().getScore());
+        }
         return pointsInTurn;
     }
 
@@ -246,15 +247,19 @@ public abstract class  Game {
     }
 
     public void addCardToTurn(Card turnCard, Player p){
+        System.out.println("sono in game in addTurnCards per aggiungere la carta alle carte in turno");
         getTurnCards().put(p, turnCard);
         try {
+            System.out.println("sono nel ramo try per passare il turno");
             playTurn(nextPlayer(p));
+            System.out.println("sono arrivato alla fine di addCardToTurn");
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
     public Player nextPlayer(Player p) {
+        System.out.println("sono in game dentro next player, le carte in turno sono: "+getTurnCards().size());
         if(getTurnCards().size() == getNumPlayers())
             return null;
         else return getPlayersTurn().get(getTurnCards().size());
