@@ -63,6 +63,7 @@ public abstract class  Game {
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
         this.players = new HashMap<>();
+        enumHandler = new EnumHandler();
         createDeck();
     }
 
@@ -250,7 +251,7 @@ public abstract class  Game {
         System.out.println("sono in game in addTurnCards per aggiungere la carta alle carte in turno");
         getTurnCards().put(p, turnCard);
         try {
-            System.out.println("sono nel ramo try per passare il turno");
+            updateWithPlayedCards(turnCard, p);
             playTurn(nextPlayer(p));
             System.out.println("sono arrivato alla fine di addCardToTurn");
         } catch (RemoteException e) {
@@ -258,7 +259,20 @@ public abstract class  Game {
         }
     }
 
-    public Player nextPlayer(Player p) {
+    private void updateWithPlayedCards(Card turnCard, Player p){
+        playersTurn.forEach(player -> {
+            if(!(player==p)) {
+                try {
+                    player.updateWithPlayedCard(turnCard.getId());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+    }
+
+    private Player nextPlayer(Player p) {
         System.out.println("sono in game dentro next player, le carte in turno sono: "+getTurnCards().size());
         if(getTurnCards().size() == getNumPlayers())
             return null;

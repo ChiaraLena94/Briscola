@@ -13,7 +13,6 @@ public class EnumHandler {
     }
 
     private void initializeNumberMap() {
-
         numberMap= new HashMap<>();
         numberMap.put(Number.ACE, 1);
         numberMap.put(Number.TWO, 2);

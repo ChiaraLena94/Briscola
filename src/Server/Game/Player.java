@@ -13,7 +13,6 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     private int points;
     private String team;
     private String username;
-
     private ClientInterface clientPlayer;
     private Game game;
 
@@ -76,5 +75,9 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     @Override
     public int getNumPlayersInGame() throws RemoteException {
         return game.getNumPlayers();
+    }
+
+    public void updateWithPlayedCard(int idTurnCard) throws RemoteException {
+        clientPlayer.updateWithPlayedCard(idTurnCard);
     }
 }
