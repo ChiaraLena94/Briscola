@@ -4,6 +4,8 @@ import Core.Card;
 import Core.Deck;
 import Core.EnumHandler;
 import Core.Seed;
+import javafx.application.Platform;
+
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -81,7 +83,6 @@ public abstract class  Game {
 
     public void addPlayer(Player p) {
         players.put(players.size()+1,p);
-        System.out.println("sono nel game in addPlayer, numPlayer: " +numPlayers+ "game: " +this);
         if(players.size() == numPlayers) {
             setFull(true);
             startGame();
@@ -128,7 +129,6 @@ public abstract class  Game {
 
     public int getTurnPoints() {
         pointsInTurn = 0;
-        System.out.println("sono in get turn points e stampo il numero di carte in turno "+getTurnCards().size());
         for (Map.Entry<Player, Card> entry : getTurnCards().entrySet()) {
             pointsInTurn += enumHandler.getScoreMap().get(entry.getValue().getScore());
         }
@@ -199,6 +199,7 @@ public abstract class  Game {
     }
 
     public void endTurn() throws RemoteException {
+        System.out.println("sono in endTurn e stampo il numero di punti in questo turno: "+getTurnPoints());
         setNumBriscole(0);
         setNumberOfBriscoleInThisTurn();
         if (getNumPlayers()==4) {
@@ -212,6 +213,8 @@ public abstract class  Game {
             }
         }
         else getWinner().addPoints(getTurnPoints());
+        System.out.println("sono in endTurn e il vincitore del turno è: "+getWinner().getUsername());
+        updateTurnWinner(getWinner().getUsername());
         if (!getDeck().isEmpty()) {
             playersTurn = reorderPlayersTurn();
             for (int i=0; i<getPlayersTurn().size(); i++)
@@ -271,6 +274,17 @@ public abstract class  Game {
 
         });
     }
+
+    private void updateTurnWinner(String turnWinnerPlayer){
+            playersTurn.forEach(player -> {
+                try {
+                    player.updateTurnWinner(turnWinnerPlayer);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            });
+    }
+
 
     private Player nextPlayer(Player p) {
         System.out.println("sono in game dentro next player, le carte in turno sono: "+getTurnCards().size());

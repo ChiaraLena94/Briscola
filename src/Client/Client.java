@@ -3,6 +3,7 @@ package Client;
 import Client.Gui.GameGui;
 import Core.Card;
 import Core.Deck;
+import Server.Game.Player;
 import api.ClientInterface;
 import api.PlayerInterface;
 import api.ServerInterface;
@@ -131,6 +132,15 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
                 }
         );
 
+    }
+
+    @Override
+    public void updateTurnWinner(String turnWinnerPlayer) throws RemoteException {
+        Platform.runLater(
+                () -> {
+                    gameGui.endTurn(turnWinnerPlayer);
+                }
+        );
     }
 
     //Viene chiamato dalla grafica client, selezionando una carta

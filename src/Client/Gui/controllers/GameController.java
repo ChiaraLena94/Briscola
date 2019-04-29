@@ -84,27 +84,10 @@ public class GameController implements Initializable {
         myLeft.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(0).getId()))));
         myCenter.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(1).getId()))));
         myRight.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(2).getId()))));
-        adv1Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv1Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv1Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         deck.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         addListenerToCards();
-
-        try {
-            if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()>2) {
-                adv3Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-                adv3Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-                adv3Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-                if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()==4){
-                    adv4Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-                    adv4Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-                    adv4Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-                }
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
+        initializeAdv1();
+        initializeOtherAdv();
         try {
             briscola.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(Client.getInstance().getPlayerInterface().getBriscolaCard().getId()))));
         } catch (RemoteException e) {
@@ -113,6 +96,37 @@ public class GameController implements Initializable {
     }
 
 
+    private void initializeAdv1() {
+        adv1Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv1Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv1Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+    }
+
+    private void initializeAdv3() {
+        adv3Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv3Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv3Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+    }
+
+    private void initializeAdv4() {
+        adv4Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv4Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv4Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+    }
+
+    private void initializeOtherAdv() {
+        try {
+            if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()>2) {
+                initializeAdv3();
+                if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()==4){
+                    initializeAdv4();
+                }
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void zoomImageLeft(MouseEvent mouseEvent){
         myLeft.setOnMouseEntered(e -> {
@@ -188,14 +202,11 @@ public class GameController implements Initializable {
         });
     }
 
-
-    public void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
+    private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
         gameGui=Client.getInstance().getGameGui();
-        System.out.println("sono in chooseCard, adesso chiamo l'interfaccia player nel client. gamegui è "+gameGui);
         gameGui.insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
         Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
         deleteCorrectCard(idCard);
-        System.out.println("sono in game conttroller e ho spostato la carta");
     }
 
     private void deleteCorrectCard(int idCard) {

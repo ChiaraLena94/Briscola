@@ -1,10 +1,12 @@
 package Client.Gui;
 
 import Client.Client;
+import Server.Game.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -14,14 +16,19 @@ import java.io.IOException;
 public class GameGui {
     private Scene scene;
     private Stage stage;
-    private ImageView myLeft =null;
-    private ImageView myCenter =null;
-    private ImageView myRight =null;
+    private ImageView myLeft =new ImageView();
+    private ImageView myCenter =new ImageView();
+    private ImageView myRight =new ImageView();
+    private ImageView adv1Right =new ImageView();
     private ImageView cardPlayer1 =new ImageView();
     private ImageView cardPlayer2 =new ImageView();
     private ImageView cardPlayer3 =new ImageView();
     private ImageView cardPlayer4 =new ImageView();
     private CardPathLoader cardPathLoader;
+
+    public Stage getStage() {
+        return stage;
+    }
 
 
     public GameGui() throws IOException {
@@ -42,8 +49,8 @@ public class GameGui {
         myLeft= (ImageView) scene.lookup("#myLeft");
         myCenter= (ImageView) scene.lookup("#myCenter");
         myRight= (ImageView) scene.lookup("#myRight");
+        adv1Right= (ImageView) scene.lookup("#adv1Right");
         cardPlayer1= (ImageView) scene.lookup("#cardPlayer1");
-        System.out.println("sono in initializeId e printo crdPlayer1"+cardPlayer1);
         cardPlayer2= (ImageView) scene.lookup("#cardPlayer2");
         cardPlayer3= (ImageView) scene.lookup("#cardPlayer3");
         cardPlayer4= (ImageView) scene.lookup("#cardPlayer4");
@@ -54,11 +61,9 @@ public class GameGui {
         return root;
     }
 
-
-
     public void addCardToBoard(int idCard) {
         insertCard(cardPathLoader.getPath(idCard));
-
+        adv1Right.setImage(null);
     }
 
     public void insertCard (String image) {
@@ -79,11 +84,10 @@ public class GameGui {
     }
 
 
-
-
-
-
-    public Stage getStage() {
-        return stage;
+    public void endTurn(String turnWinnerPlayer) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("TURN WINNER");
+        alert.setContentText("The winner of this turn is "+turnWinnerPlayer);
+        alert.showAndWait();
     }
 }
