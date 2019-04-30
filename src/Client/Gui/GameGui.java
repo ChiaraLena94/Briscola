@@ -26,11 +26,12 @@ public class GameGui {
     private ImageView cardPlayer4 =new ImageView();
     private CardPathLoader cardPathLoader;
 
+    //getter methods
     public Stage getStage() {
         return stage;
     }
 
-
+    //GameGui constructor
     public GameGui() throws IOException {
         Parent window = createContent();
             Platform.runLater(()-> {
@@ -44,6 +45,7 @@ public class GameGui {
         System.out.println("sono in gamegui e lo stage è "+stage);
         cardPathLoader=new CardPathLoader();
     }
+
 
     private void initializeId() {
         myLeft= (ImageView) scene.lookup("#myLeft");
@@ -82,7 +84,6 @@ public class GameGui {
             cardPlayer4.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
         }
     }
-
 
     public void endTurn(String turnWinnerPlayer) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

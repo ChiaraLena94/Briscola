@@ -1,7 +1,5 @@
 package Client.Gui;
 
-import Core.Card;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +54,7 @@ public class CardPathLoader {
         cardMap.put(40,"Bastoni_10.jpg");
     }
 
+    //this methods takes an int that represents a card id and returns the path of this specific card
     public String getPath(int i){
         for (Map.Entry<Integer, String> entry: cardMap.entrySet()) {
             if(entry.getKey() == i)

@@ -22,6 +22,7 @@ public abstract class  Game {
     private int numBriscole;
     private int numPlayerMaxCard;
 
+    //getter methods
     public int getNumBriscole() {
         return numBriscole;
     }
@@ -62,12 +63,15 @@ public abstract class  Game {
         return deck;
     }
 
+    //Game constructor
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
         this.players = new HashMap<>();
         enumHandler = new EnumHandler();
         createDeck();
     }
+
+
 
     private void createDeck() {
         deck = new Deck(isNormal());
@@ -285,7 +289,6 @@ public abstract class  Game {
             });
     }
 
-
     private Player nextPlayer(Player p) {
         System.out.println("sono in game dentro next player, le carte in turno sono: "+getTurnCards().size());
         if(getTurnCards().size() == getNumPlayers())
@@ -297,7 +300,6 @@ public abstract class  Game {
         if (p==null) endTurn();
         else p.yourTurn();
     }
-
 
 
     //the method getBestNotBriscolaPlayer returns an object Player that is the winner of the turn if no one has played

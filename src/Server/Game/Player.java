@@ -24,6 +24,7 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         this.team="noTeam";
     }
 
+    //getter methods
     public String getTeam() {
         return team;
     }
@@ -44,6 +45,9 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         return points;
     }
 
+
+
+
     public void addPoints(int points) {
         this.points += points;
     }
@@ -54,6 +58,14 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
 
     public void yourTurn() throws RemoteException {
         clientPlayer.selectCard();
+    }
+
+    public void updateWithPlayedCard(int idTurnCard) throws RemoteException {
+        clientPlayer.updateWithPlayedCard(idTurnCard);
+    }
+
+    public void updateTurnWinner(String turnWinnerPlayer) throws RemoteException {
+        clientPlayer.updateTurnWinner(turnWinnerPlayer);
     }
 
     @Override
@@ -75,13 +87,5 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     @Override
     public int getNumPlayersInGame() throws RemoteException {
         return game.getNumPlayers();
-    }
-
-    public void updateWithPlayedCard(int idTurnCard) throws RemoteException {
-        clientPlayer.updateWithPlayedCard(idTurnCard);
-    }
-
-    public void updateTurnWinner(String turnWinnerPlayer) throws RemoteException {
-        clientPlayer.updateTurnWinner(turnWinnerPlayer);
     }
 }

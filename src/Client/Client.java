@@ -56,17 +56,21 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         return hand;
     }
 
+    //getter and setter methods
     public PlayerInterface getPlayerInterface() {
         return playerInterface;
     }
+
+    public void setBufferStage(Stage bufferStage){
+        this.bufferStage=bufferStage;
+    }
+
+
 
     public void enterGame(int numPlayers) throws RemoteException {
         playerInterface = server.enterGame(username, numPlayers, this);
     }
 
-    /**
-     * esegue il login ritornando vero se a buon fine, falso altrimenti
-     */
     public void login(String username, int numPlayers){
         try {
             playerInterface = server.login(username, numPlayers, this);
@@ -76,11 +80,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
             e.printStackTrace();
         }
     }
-
-    public void setBufferStage(Stage bufferStage){
-        this.bufferStage=bufferStage;
-    }
-
 
     public void createGameStage() throws IOException {
         try {
@@ -112,7 +111,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     }
 
-
     @Override
     public void drawCard() throws RemoteException {
        hand.add(playerInterface.drawCard());
@@ -143,13 +141,14 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         );
     }
 
+
     //Viene chiamato dalla grafica client, selezionando una carta
     public void playCard(Card card) throws  RemoteException{
         hand.remove(card);
         playerInterface.turnCard(card);
     }
 
-
+    //Instance methods. they create the instance client
     public static Client getInstance(){
         return instance;
     }
