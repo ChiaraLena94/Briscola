@@ -157,4 +157,8 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         instance = new Client(username);
         return instance;
     }
+
+    public List<String> getPlayerList() throws RemoteException {
+        return playerInterface.getPlayerList();
+    }
 }

@@ -7,10 +7,12 @@ import Client.Gui.animations.ScaleAnimation;
 import Core.Card;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class GameController implements Initializable {
     List<Card> hand=new ArrayList<>();
     CardPathLoader cardPathLoader = new CardPathLoader();
     GameGui gameGui=null;
+    List<String> playerList= new ArrayList<>();
 
 
     @FXML
@@ -77,6 +80,20 @@ public class GameController implements Initializable {
     @FXML
     public ImageView deck;
 
+    @FXML
+    public Label myName;
+
+    @FXML
+    public Label myPoints;
+
+    @FXML
+    public Label nameAdv1;
+
+    @FXML
+    public Label nameAdv3;
+
+    @FXML
+    public Label nameAdv4;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,6 +102,14 @@ public class GameController implements Initializable {
         myCenter.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(1).getId()))));
         myRight.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(2).getId()))));
         deck.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        myName.setText(Client.getInstance().getUsername());
+        myPoints.setText("0");
+        try {
+            playerList=Client.getInstance().getPlayerList();
+            playerList.remove(Client.getInstance().getUsername());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         addListenerToCards();
         initializeAdv1();
         initializeOtherAdv();
@@ -97,18 +122,24 @@ public class GameController implements Initializable {
 
 
     private void initializeAdv1() {
+        nameAdv1.setText(playerList.get(0));
+        playerList.remove(0);
         adv1Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv1Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv1Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
     }
 
     private void initializeAdv3() {
+        nameAdv3.setText(playerList.get(0));
+        playerList.remove(0);
         adv3Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv3Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv3Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
     }
 
     private void initializeAdv4() {
+        nameAdv4.setText(playerList.get(0));
+        playerList.remove(0);
         adv4Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv4Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv4Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));

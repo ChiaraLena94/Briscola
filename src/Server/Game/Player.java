@@ -7,6 +7,7 @@ import api.PlayerInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends UnicastRemoteObject implements PlayerInterface {
@@ -87,5 +88,12 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     @Override
     public int getNumPlayersInGame() throws RemoteException {
         return game.getNumPlayers();
+    }
+
+    @Override
+    public List<String> getPlayerList() throws RemoteException {
+        List<String> playerUsername = new ArrayList<String>();
+        game.getPlayers().forEach((k,v) -> playerUsername.add(v.getUsername()));
+        return playerUsername;
     }
 }

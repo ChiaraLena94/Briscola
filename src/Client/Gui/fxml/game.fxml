@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #0a3908;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Gui.controllers.GameController">
    <children>
@@ -17,7 +20,7 @@
       </ImageView>
       <ImageView fx:id="myCenter" fitHeight="150.0" layoutX="425.0" layoutY="510.0" onMouseEntered="#zoomImageCenter" onMouseExited="#zoomImageCenter" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-      <ImageView fx:id="myRight" fitHeight="150.0" fitWidth="200.0" layoutX="490.0" layoutY="520.0"  onMouseEntered="#zoomImageRight" onMouseExited="#zoomImageRight" pickOnBounds="true" preserveRatio="true" rotate="20.0">
+      <ImageView fx:id="myRight" fitHeight="150.0" fitWidth="200.0" layoutX="490.0" layoutY="520.0" onMouseEntered="#zoomImageRight" onMouseExited="#zoomImageRight" pickOnBounds="true" preserveRatio="true" rotate="20.0">
       </ImageView>
       <ImageView fx:id="adv1Center" fitHeight="100.0" fitWidth="200.0" layoutX="425.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
@@ -33,6 +36,14 @@
       </ImageView>
       <ImageView fx:id="cardPlayer4" fitHeight="150.0" layoutX="670.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
+      <ImageView fx:id="cardAnimation1" fitHeight="150.0" layoutX="370.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="cardAnimation2" fitHeight="150.0" layoutX="470.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="cardAnimation3" fitHeight="150.0" layoutX="570.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="cardAnimation4" fitHeight="150.0" layoutX="670.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
       <ImageView fx:id="adv3Center" fitHeight="100.0" layoutX="900.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
       </ImageView>
       <ImageView fx:id="adv3Left" fitHeight="100.0" layoutX="890.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true" rotate="290.0">
@@ -40,6 +51,39 @@
       <ImageView fx:id="adv4Center" fitHeight="100.0" layoutX="40.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
       </ImageView>
       <ImageView fx:id="adv4Left" fitHeight="100.0" layoutX="45.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" rotate="290.0">
+      </ImageView>
+      <Label fx:id="nameAdv1" layoutX="268.0" layoutY="34.0" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameAdv4" layoutX="29.0" layoutY="204.0" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameAdv3" layoutX="878.0" layoutY="209.0" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="myName" layoutX="230.0" layoutY="531.0" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="myPoints" layoutX="268.0" layoutY="602.0" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="deckAdv1" fitHeight="100.0" layoutX="600.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      </ImageView>
+      <ImageView fx:id="myDeck" fitHeight="150.0" layoutX="640.0" layoutY="560.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      </ImageView>
+      <ImageView fx:id="deckAdv3" fitHeight="100.0" layoutX="930.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
+      </ImageView>
+      <ImageView fx:id="deckAdv4" fitHeight="100.0" layoutX="10.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
    </children>
 </AnchorPane>

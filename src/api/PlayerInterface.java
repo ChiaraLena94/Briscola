@@ -5,6 +5,7 @@ import Core.Seed;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface PlayerInterface extends Remote {
 
@@ -15,4 +16,6 @@ public interface PlayerInterface extends Remote {
     public Card getBriscolaCard() throws RemoteException;
 
     public int getNumPlayersInGame() throws RemoteException;
+
+    public List<String> getPlayerList() throws RemoteException;
 }
