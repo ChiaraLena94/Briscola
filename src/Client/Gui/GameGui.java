@@ -128,7 +128,7 @@ public class GameGui {
         new TranslateAnimation(cardAnimation2, cardAnimation1.getX(), cardAnimation1.getY(), Duration.seconds(1.5)).playAnimation();
         new TranslateAnimation(cardAnimation3, cardAnimation1.getX(), cardAnimation1.getY(), Duration.seconds(1.5)).playAnimation();
         new TranslateAnimation(cardAnimation4, cardAnimation1.getX(), cardAnimation1.getY(), Duration.seconds(1.5)).playAnimation();
-        cardAnimation1.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png"))));
+        cardAnimation1.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         cardAnimation2.setImage(null);
         cardAnimation3.setImage(null);
         cardAnimation4.setImage(null);
@@ -141,7 +141,11 @@ public class GameGui {
 
 
         if(winner.equals(Client.getInstance().getUsername())) {
-            //la carta si sposta verso di me
+            new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.seconds(1.5)).playAnimation();
+            myDeck.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+            cardAnimation1.setImage(null);
+            cardAnimation1.setX(cardPlayer1.getX());
+            cardAnimation1.setY(cardPlayer1.getY());
 
         }
         else {
