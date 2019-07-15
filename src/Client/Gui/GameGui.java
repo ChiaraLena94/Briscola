@@ -154,6 +154,7 @@ public class GameGui {
 
     }
 
+
     private void deleteCardInTurn() {
         if (cardPlayer1 != null) {
             cardPlayer1.setImage(null);
