@@ -75,6 +75,8 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     public void turnCard(Card card) throws RemoteException {
         System.out.println("sono nel player" +username+", adesso aggiungo la carta a turnCards");
         game.addCardToTurn(card,this);
+        System.out.println("sono in player-turncard: la carta è "+card.getId()+card.getNum()+"stampo il seed"+card.getSeed()+"ho finito di stampare il seed"+card.getScore());
+        System.out.println("la briscola di questo game è: "+game.getBriscola()+"fine seed");
     }
 
     @Override
@@ -84,7 +86,7 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
 
     @Override
     public Card getBriscolaCard() throws RemoteException {
-        return game.getDeck().getBriscola();
+        return game.getDeck().getBriscolaCard();
     }
 
     @Override

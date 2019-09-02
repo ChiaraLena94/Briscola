@@ -237,7 +237,7 @@ public class GameController implements Initializable {
         gameGui.insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
         Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
         deleteCorrectCard(idCard);
-        System.out.println("sono in gamecontroller: l'id della carta che ho scelto è:  "+idCard);
+        System.out.println("sono in gamecontroller: la posizione della carta che ho scelto è:  "+idCard);
     }
 
     private void deleteCorrectCard(int idCard) {

@@ -75,8 +75,7 @@ public abstract class  Game {
 
     private void createDeck() {
         deck = new Deck(isNormal());
-        briscola = deck.getBriscola().getSeed();
-        deck.moveBriscolaLast();
+        briscola = deck.getBriscolaCard().getSeed();
     }
 
     private Boolean isNormal() {

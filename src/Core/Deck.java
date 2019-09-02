@@ -6,24 +6,20 @@ public class Deck {
     private List<Card> deck;
     private Card briscolaCard;
 
+    public Card getBriscolaCard() {
+        return briscolaCard;
+    }
+
     public Deck(Boolean normalDeck){
         initializeDeck();
         if(!normalDeck)
             deck.remove(2);
         shuffleDeck();
-    }
-
-    public Card getBriscola(){
-        return deck.get(0);
+        briscolaCard=deck.get(39);
     }
 
     private void shuffleDeck(){
         Collections.shuffle(deck);
-    }
-
-    public void moveBriscolaLast() {
-        deck.add(deck.get(0));
-        deck.remove(0);
     }
 
     public Card drawCard(){
