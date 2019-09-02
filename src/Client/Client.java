@@ -19,6 +19,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Map;
 
 public class Client extends UnicastRemoteObject implements ClientInterface {
     private  static final String SERVER = "serverBriscola";
@@ -136,7 +137,11 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     public void updateTurnWinner(String turnWinnerPlayer) throws RemoteException {
         Platform.runLater(
                 () -> {
-                    gameGui.endTurn(turnWinnerPlayer);
+                    try {
+                        gameGui.endTurn(turnWinnerPlayer);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 }
         );
     }
@@ -160,5 +165,9 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     public List<String> getPlayerList() throws RemoteException {
         return playerInterface.getPlayerList();
+    }
+
+    public Map<String, Integer> getMapPoints() throws RemoteException {
+        return playerInterface.getMapPoints();
     }
 }

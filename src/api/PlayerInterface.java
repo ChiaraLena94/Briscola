@@ -6,6 +6,7 @@ import Core.Seed;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 public interface PlayerInterface extends Remote {
 
@@ -18,4 +19,7 @@ public interface PlayerInterface extends Remote {
     public int getNumPlayersInGame() throws RemoteException;
 
     public List<String> getPlayerList() throws RemoteException;
+
+    public Map<String, Integer> getMapPoints() throws RemoteException;
+
 }

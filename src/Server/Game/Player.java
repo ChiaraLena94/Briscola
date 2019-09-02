@@ -8,7 +8,9 @@ import api.PlayerInterface;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Player extends UnicastRemoteObject implements PlayerInterface {
     private int points;
@@ -95,5 +97,12 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         List<String> playerUsername = new ArrayList<String>();
         game.getPlayers().forEach((k,v) -> playerUsername.add(v.getUsername()));
         return playerUsername;
+    }
+
+    @Override
+    public Map<String, Integer> getMapPoints (){
+        HashMap<String, Integer> mapPoints= new HashMap<>();
+        game.getPlayers().forEach((k,v) -> mapPoints.put(v.getUsername(), v.getPoints()));
+        return mapPoints;
     }
 }
