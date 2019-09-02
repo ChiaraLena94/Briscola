@@ -67,7 +67,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     }
 
 
-
     public void enterGame(int numPlayers) throws RemoteException {
         playerInterface = server.enterGame(username, numPlayers, this);
     }

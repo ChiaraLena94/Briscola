@@ -120,7 +120,6 @@ public class GameController implements Initializable {
         }
     }
 
-
     private void initializeAdv1() {
         nameAdv1.setText(playerList.get(0));
         playerList.remove(0);
@@ -238,6 +237,7 @@ public class GameController implements Initializable {
         gameGui.insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
         Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
         deleteCorrectCard(idCard);
+        System.out.println("sono in gamecontroller: l'id della carta che ho scelto è:  "+idCard);
     }
 
     private void deleteCorrectCard(int idCard) {
@@ -245,6 +245,5 @@ public class GameController implements Initializable {
         else if (idCard==1) myCenter.setImage(null);
         else myRight.setImage(null);
     }
-
 
 }

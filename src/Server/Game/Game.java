@@ -21,14 +21,16 @@ public abstract class  Game {
     private EnumHandler enumHandler;
     private int numBriscole;
     private int numPlayerMaxCard;
+    int num=0;
 
     //getter methods
     public int getNumBriscole() {
         return numBriscole;
     }
 
-    public void setNumBriscole(int numBriscole) {
-        this.numBriscole = numBriscole;
+    public void setNumBriscole() {
+        numBriscole=setNumberOfBriscoleInThisTurn();
+        System.out.println("ho settato il numero di briscole che è: "+getNumBriscole());
     }
 
     public Map<Player, Card> getTurnCards() {
@@ -71,11 +73,9 @@ public abstract class  Game {
         createDeck();
     }
 
-
-
     private void createDeck() {
         deck = new Deck(isNormal());
-        briscola = getBriscola();
+        briscola = deck.getBriscola().getSeed();
         deck.moveBriscolaLast();
     }
 
@@ -125,9 +125,10 @@ public abstract class  Game {
 
     public Player getBriscolaPlayer(){
         for (Map.Entry<Player, Card> entry : getTurnCards().entrySet()) {
-            if(entry.getValue().getSeed() == getBriscola())
+            if(entry.getValue().getSeed()==briscola)
                 return entry.getKey();
         }
+        System.out.println("non dovrei essere qui");
         return null;
     }
 
@@ -139,11 +140,14 @@ public abstract class  Game {
         return pointsInTurn;
     }
 
-    public void setNumberOfBriscoleInThisTurn() {
+    public int setNumberOfBriscoleInThisTurn() {
         getTurnCards().forEach((player,card) -> {
-            if(card.getSeed() == getBriscola())
-                numBriscole++;
+            System.out.println("sono in setnumbriscole, stampo la carta: "+card.getId()+card.getSeed()+card.getNum());
+            if(card.getSeed()==getBriscola())
+                num++;
         });
+        System.out.println("sono in setnumberofbriscoleinthisturn. le briscole sono: "+num);
+        return num;
     }
 
     //the method getMaxScoreCard returns the highest score between all the cards in a map
@@ -204,8 +208,7 @@ public abstract class  Game {
 
     public void endTurn() throws RemoteException {
         System.out.println("sono in endTurn e stampo il numero di punti in questo turno: "+getTurnPoints());
-        setNumBriscole(0);
-        setNumberOfBriscoleInThisTurn();
+        setNumBriscole();
         if (getNumPlayers()==4) {
             if (getWinner()==getPlayersTurn().get(0) || getWinner()==getPlayersTurn().get(2)){
                 getPlayersTurn().get(0).addPoints(getTurnPoints());
@@ -219,6 +222,8 @@ public abstract class  Game {
         else getWinner().addPoints(getTurnPoints());
         System.out.println("sono in endTurn e il vincitore del turno è: "+getWinner().getUsername());
         updateTurnWinner(getWinner().getUsername());
+        numBriscole=0;
+        num=0;
         if (!getDeck().isEmpty()) {
             playersTurn = reorderPlayersTurn();
             for (int i=0; i<getPlayersTurn().size(); i++)

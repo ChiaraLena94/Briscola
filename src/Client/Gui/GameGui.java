@@ -131,7 +131,6 @@ public class GameGui {
         cardAnimation1.setY(cardPlayer1.getY());
         setEqualsCardId();
         cardAnimation1.setImage(cardPlayer1.getImage());
-        System.out.println("la carta di cardAnimation1 è: "+cardPlayer1.getImage());
         cardAnimation2.setImage(cardPlayer2.getImage());
         cardAnimation3.setImage(cardPlayer3.getImage());
         cardAnimation4.setImage(cardPlayer4.getImage());

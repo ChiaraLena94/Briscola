@@ -49,10 +49,13 @@ public class TwoPlayersGame extends Game {
     @Override
     protected Player getWinner() {
         System.out.println("sono in getWinner e le carte in turno sono "+getTurnCards().size());
+        System.out.println("sono in getWinner e le carte in turno sono:");
+        System.out.println(getTurnCards().values());
         switch(getNumBriscole()) {
             case 0:
                 return getBestNotBriscolaPlayer();
             case 1:
+                System.out.println("sono in getWinner allo switch 1");
                 return getBriscolaPlayer();
             case 2:
                 return getBestCardPlayer(getTurnCards());

@@ -60,9 +60,6 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             case 4:
                 gamesMap.get(numPlayers).add(new FourPlayersGame(numPlayers));
             break;
-            case 5:
-                gamesMap.get(numPlayers).add(new FourPlayersGame(numPlayers));
-            break;
             default:
                 System.out.println("ERROR");
             break;
