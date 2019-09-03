@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -45,6 +46,7 @@ public class GameGui {
     private Label nameAdv1 = new Label();
     private Label nameAdv3 = new Label();
     private Label nameAdv4 = new Label();
+    private Label controlLabel = new Label();
     private ImageView deckAdv1 =new ImageView();
     private ImageView deckAdv3 =new ImageView();
     private ImageView deckAdv4 =new ImageView();
@@ -61,6 +63,22 @@ public class GameGui {
         return stage;
     }
 
+    public Label getControlLabel() {
+        return controlLabel;
+    }
+
+    public ImageView getMyLeft() {
+        return myLeft;
+    }
+
+    public ImageView getMyCenter() {
+        return myCenter;
+    }
+
+    public ImageView getMyRight() {
+        return myRight;
+    }
+
     //GameGui constructor
     public GameGui() throws IOException {
         Parent window = createContent();
@@ -72,7 +90,6 @@ public class GameGui {
                 stage.setTitle(Client.getInstance().getUsername());
                 stage.show();
             });
-        System.out.println("sono in gamegui e lo stage è "+stage);
         cardPathLoader=new CardPathLoader();
     }
 
@@ -105,6 +122,7 @@ public class GameGui {
         deckAdv3= (ImageView) scene.lookup("#deckAdv3");
         deckAdv4= (ImageView) scene.lookup("#deckAdv4");
         myPoints= (Label) scene.lookup("#myPoints");
+        controlLabel= (Label) scene.lookup("#controlLabel");
     }
 
     public Parent createContent() throws IOException {
@@ -135,10 +153,6 @@ public class GameGui {
     }
 
     public void endTurn(String turnWinnerPlayer) throws RemoteException {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("TURN WINNER");
-        alert.setContentText("The winner of this turn is "+turnWinnerPlayer);
-        alert.showAndWait();
         animateCardsWinner(turnWinnerPlayer);
     }
 
@@ -151,7 +165,7 @@ public class GameGui {
         cardAnimation3.setImage(cardPlayer3.getImage());
         cardAnimation4.setImage(cardPlayer4.getImage());
         deleteCardInTurn();
-        new TranslateAnimation(cardAnimation2, cardAnimation1.getX(), cardAnimation1.getY(), Duration.millis(5000.0)).playAnimation();
+        new TranslateAnimation(cardAnimation2, cardAnimation1.getX(), cardAnimation1.getY(), Duration.millis(50000.0)).playAnimation();
 
         if (Client.getInstance().getPlayerList().size()>2) {
             new TranslateAnimation(cardAnimation3, cardAnimation1.getX(), cardAnimation1.getY(), Duration.millis(5000.0)).playAnimation();
@@ -166,7 +180,7 @@ public class GameGui {
         Platform.runLater(() ->{
             cardAnimation1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
             if(winner.equals(Client.getInstance().getUsername())) {
-            new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.seconds(1.5)).playAnimation();
+            new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.millis(5000)).playAnimation();
             myDeck.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
         }
         else {
@@ -302,6 +316,73 @@ public class GameGui {
                 adv4Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
             }
         }
+    }
+
+    public void addListenerToCards(){
+        myLeft.setOnMouseClicked(mouseEvent -> {
+            try {
+                chooseCard(mouseEvent,0);
+                changeControl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+        myCenter.setOnMouseClicked(mouseEvent -> {
+            try {
+                chooseCard(mouseEvent,1);
+                changeControl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+        myRight.setOnMouseClicked(mouseEvent -> {
+            try {
+                chooseCard(mouseEvent,2);
+                changeControl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void changeControl(){
+        controlLabel.setText("iil tuo turno  finito, ora tocca al tuo avversario");
+        removeCardListener();
+
+    }
+
+    private void removeCardListener() {
+        myLeft.setOnMouseClicked(mouseEvent -> {
+            //labelTurn.setText("non è il  tuo turno");
+        });
+
+        myCenter.setOnMouseClicked(mouseEvent -> {
+            //labelTurn.setText("non è il  tuo turno");
+        });
+
+        myRight.setOnMouseClicked(mouseEvent -> {
+            //labelTurn.setText("non è il  tuo turno");
+        });
+    }
+
+    private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
+        insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
+        try {
+            Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("sono in gamegui-choose card e ho scelto la carta");
+        deleteCorrectCard(idCard);
+        System.out.println("sono in gamegui-choose card e ho eliminato la carta corretta");
+    }
+
+    private void deleteCorrectCard(int idCard) {
+        if (idCard==0) myLeft.setImage(null);
+        else if (idCard==1) myCenter.setImage(null);
+        else if (idCard==2) myRight.setImage(null);
     }
 
 }

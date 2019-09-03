@@ -52,6 +52,11 @@
       </ImageView>
       <ImageView fx:id="adv4Left" fitHeight="100.0" layoutX="45.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" rotate="290.0">
       </ImageView>
+      <Label fx:id="controlLabel" layoutX="700" layoutY="20" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Label>
       <Label fx:id="nameAdv1" layoutX="268.0" layoutY="34.0" textFill="WHITE">
          <font>
             <Font name="Rockwell" size="18.0" />

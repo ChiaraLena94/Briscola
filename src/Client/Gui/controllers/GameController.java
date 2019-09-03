@@ -5,7 +5,6 @@ import Client.Gui.CardPathLoader;
 import Client.Gui.GameGui;
 import Client.Gui.animations.ScaleAnimation;
 import Core.Card;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,16 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-
-import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GameController implements Initializable {
-    List<Card> hand=new ArrayList<>();
+    Map<Integer,Card> hand=new HashMap<>();
     CardPathLoader cardPathLoader = new CardPathLoader();
     GameGui gameGui=null;
     List<String> playerList= new ArrayList<>();
@@ -97,12 +92,16 @@ public class GameController implements Initializable {
     @FXML
     public Label nameAdv4;
 
+    @FXML
+    public Label controlLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         hand= Client.getInstance().getHand();
-        myLeft.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(0).getId()))));
-        myCenter.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(1).getId()))));
-        myRight.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(hand.get(2).getId()))));
+        System.out.println("stampo la mappa: "+hand.values());
+        myLeft.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(((Card) hand.get(0)).getId()))));
+        myCenter.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(((Card) hand.get(1)).getId()))));
+        myRight.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(((Card) hand.get(2)).getId()))));
         deck.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         myName.setText(Client.getInstance().getUsername());
         myPoints.setText("0");
@@ -112,7 +111,7 @@ public class GameController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        addListenerToCards();
+        addFirstListener();
         initializeAdv1();
         initializeOtherAdv();
         try {
@@ -120,6 +119,46 @@ public class GameController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    private void addFirstListener(){
+        myLeft.setOnMouseClicked(mouseEvent -> {
+            try {
+                chooseCard(mouseEvent,0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+        myCenter.setOnMouseClicked(mouseEvent -> {
+            try {
+                chooseCard(mouseEvent,1);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+        myRight.setOnMouseClicked(mouseEvent -> {
+            try {
+                chooseCard(mouseEvent,2);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
+        gameGui=Client.getInstance().getGameGui();
+        gameGui.insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
+        Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
+        deleteCorrectCard(idCard);
+        System.out.println("sono in gamecontroller: la posizione della carta che ho scelto è:  "+idCard);
+    }
+
+    private void deleteCorrectCard(int idCard) {
+        if (idCard==0) myLeft.setImage(null);
+        else if (idCard==1) myCenter.setImage(null);
+        else myRight.setImage(null);
     }
 
     private void initializeAdv1() {
@@ -208,49 +247,6 @@ public class GameController implements Initializable {
         });
     }
 
-    private void addListenerToCards(){
-        myLeft.setOnMouseClicked(mouseEvent -> {
-            try {
-                chooseCard(mouseEvent,0);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
 
-        myCenter.setOnMouseClicked(mouseEvent -> {
-            try {
-                chooseCard(mouseEvent,1);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
-
-        myRight.setOnMouseClicked(mouseEvent -> {
-            try {
-                chooseCard(mouseEvent,2);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
-        gameGui=Client.getInstance().getGameGui();
-        gameGui.insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
-        try {
-            Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        System.out.println("sono in gamecontroller-choose card e ho scelto la carta");
-        deleteCorrectCard(idCard);
-        System.out.println("sono in gamecontroller-choose card e ho eliminato la carta corretta");
-    }
-
-    private void deleteCorrectCard(int idCard) {
-        if (idCard==0) myLeft.setImage(null);
-        else if (idCard==1) myCenter.setImage(null);
-        else if (idCard==2) myRight.setImage(null);
-    }
 
 }

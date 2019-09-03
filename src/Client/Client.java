@@ -18,6 +18,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +30,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     private ServerInterface server;
     private PlayerInterface playerInterface;
     private Deck deck;
-    private List<Card> hand;
+    private Map<Integer, Card> hand= new HashMap<>();
     private boolean logged=false;
     private Stage bufferStage=null;
     private Stage gameStage=null;
@@ -53,7 +55,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         return username;
     }
 
-    public List<Card> getHand() {
+    public Map<Integer, Card> getHand() {
         return hand;
     }
 
@@ -91,8 +93,12 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
 
     @Override
-    public void receiveHand(List<Card> hand) throws RemoteException {
-        this.hand=hand;
+    public void receiveHand(List<Card> handList) throws RemoteException {
+        int index=0;
+        for(Card card:handList) {
+                hand.put(index, card);
+                index++;
+        }
         Platform.runLater(
                 () -> {
                     bufferStage.close();
@@ -107,16 +113,42 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void selectCard() throws RemoteException {
-        //chiami un metodo su main gui player per dirgli è il tuo turno.
-
+        Platform.runLater(() ->{
+            gameGui.getControlLabel().setText("è il tuo turno!");
+            gameGui.addListenerToCards();
+        });
     }
 
     @Override
     public void drawCard() throws RemoteException {
-       Card c = playerInterface.drawCard();
-       hand.add(c);
-       System.out.println("la carta pescata è: "+c.getNum()+c.getSeed());
-       gameGui.updateHand(c);
+
+        int i=0;
+        Card c = playerInterface.drawCard();
+        i=getEmptyIndex();
+        hand.put(i, c);
+
+        System.out.println("la carta pescata è: "+c.getNum()+c.getSeed());
+        gameGui.updateHand(c);
+    }
+
+    private int getEmptyIndex() {
+        List<Integer> list= new ArrayList<>();
+        for (Map.Entry entry : hand.entrySet()) {
+            list.add((Integer) entry.getKey());
+
+        }
+        System.out.println("MAPPA:"+hand.values());
+        if (list.get(0)+list.get(1)==1) {
+            return 2;
+        }
+        if (list.get(0)+list.get(1)==2) {
+            return 1;
+        }
+        if (list.get(0)+list.get(1)==3) {
+            return 0;
+        }
+        System.out.println("c'è stato un errore nel calcolo!!!!!");
+        return 42;
     }
 
     @Override
