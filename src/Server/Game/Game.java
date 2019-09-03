@@ -223,11 +223,13 @@ public abstract class  Game {
         updateTurnWinner(getWinner().getUsername());
         numBriscole=0;
         num=0;
+
         if (!getDeck().isEmpty()) {
             playersTurn = reorderPlayersTurn();
             for (int i=0; i<getPlayersTurn().size(); i++)
                 getPlayersTurn().get(i).getClientPlayer().drawCard();
             try {
+                getTurnCards().clear();
                 playTurn(getPlayersTurn().get(0));
             } catch (RemoteException e) {
                 e.printStackTrace();

@@ -150,19 +150,22 @@ public class GameGui {
         cardAnimation2.setImage(cardPlayer2.getImage());
         cardAnimation3.setImage(cardPlayer3.getImage());
         cardAnimation4.setImage(cardPlayer4.getImage());
-
         deleteCardInTurn();
+        new TranslateAnimation(cardAnimation2, cardAnimation1.getX(), cardAnimation1.getY(), Duration.millis(5000.0)).playAnimation();
 
-        new TranslateAnimation(cardAnimation2, cardAnimation1.getX(), cardAnimation1.getY(), Duration.seconds(2.5)).playAnimation();
-        new TranslateAnimation(cardAnimation3, cardAnimation1.getX(), cardAnimation1.getY(), Duration.seconds(2.5)).playAnimation();
-        new TranslateAnimation(cardAnimation4, cardAnimation1.getX(), cardAnimation1.getY(), Duration.seconds(2.5)).playAnimation();
-        cardAnimation1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+        if (Client.getInstance().getPlayerList().size()>2) {
+            new TranslateAnimation(cardAnimation3, cardAnimation1.getX(), cardAnimation1.getY(), Duration.millis(5000.0)).playAnimation();
+            new TranslateAnimation(cardAnimation4, cardAnimation1.getX(), cardAnimation1.getY(), Duration.millis(5000.0)).playAnimation();
+        }
+
         cardAnimation2.setImage(null);
         cardAnimation3.setImage(null);
         cardAnimation4.setImage(null);
         setEqualsCardId();
 
-        if(winner.equals(Client.getInstance().getUsername())) {
+        Platform.runLater(() ->{
+            cardAnimation1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            if(winner.equals(Client.getInstance().getUsername())) {
             new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.seconds(1.5)).playAnimation();
             myDeck.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
         }
@@ -170,10 +173,17 @@ public class GameGui {
             createAdvDeck(winner);
         }
 
-        cardAnimation1.setImage(null);
-        cardAnimation1.setX(cardPlayer1.getX());
-        cardAnimation1.setY(cardPlayer1.getY());
-        updateLabelPoints(winner);
+            cardAnimation1.setImage(null);
+            cardAnimation1.setX(cardPlayer1.getX());
+            cardAnimation1.setY(cardPlayer1.getY());
+            try {
+                updateLabelPoints(winner);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+
+
     }
 
     private void updateLabelPoints (String winner) throws RemoteException {
