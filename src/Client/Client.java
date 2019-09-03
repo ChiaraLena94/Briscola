@@ -113,8 +113,10 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void drawCard() throws RemoteException {
-       hand.add(playerInterface.drawCard());
-       //chiama un metodo nella gui che fa l' animazione del pescaggio
+       Card c = playerInterface.drawCard();
+       hand.add(c);
+       System.out.println("la carta pescata è: "+c.getNum()+c.getSeed());
+       gameGui.updateHand(c);
     }
 
     @Override
@@ -149,7 +151,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     //Viene chiamato dalla grafica client, selezionando una carta
     public void playCard(Card card) throws  RemoteException{
         hand.remove(card);
-        System.out.println("sono in client-playcard: la carta è "+card.getId()+card.getNum()+card.getSeed());
         playerInterface.turnCard(card);
     }
 

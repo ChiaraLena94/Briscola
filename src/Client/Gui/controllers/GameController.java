@@ -5,6 +5,7 @@ import Client.Gui.CardPathLoader;
 import Client.Gui.GameGui;
 import Client.Gui.animations.ScaleAnimation;
 import Core.Card;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -235,15 +237,20 @@ public class GameController implements Initializable {
     private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
         gameGui=Client.getInstance().getGameGui();
         gameGui.insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
-        Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
+        try {
+            Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("sono in gamecontroller-choose card e ho scelto la carta");
         deleteCorrectCard(idCard);
-        System.out.println("sono in gamecontroller: la posizione della carta che ho scelto è:  "+idCard);
+        System.out.println("sono in gamecontroller-choose card e ho eliminato la carta corretta");
     }
 
     private void deleteCorrectCard(int idCard) {
         if (idCard==0) myLeft.setImage(null);
         else if (idCard==1) myCenter.setImage(null);
-        else myRight.setImage(null);
+        else if (idCard==2) myRight.setImage(null);
     }
 
 }

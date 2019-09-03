@@ -2,6 +2,7 @@ package Client.Gui;
 
 import Client.Client;
 import Client.Gui.animations.TranslateAnimation;
+import Core.Card;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,14 @@ public class GameGui {
     private ImageView myCenter =new ImageView();
     private ImageView myRight =new ImageView();
     private ImageView adv1Right =new ImageView();
+    private ImageView adv1Center =new ImageView();
+    private ImageView adv1Left =new ImageView();
+    private ImageView adv3Right =new ImageView();
+    private ImageView adv3Center =new ImageView();
+    private ImageView adv3Left =new ImageView();
+    private ImageView adv4Right =new ImageView();
+    private ImageView adv4Center =new ImageView();
+    private ImageView adv4Left =new ImageView();
     private ImageView cardPlayer1 =new ImageView();
     private ImageView cardPlayer2 =new ImageView();
     private ImageView cardPlayer3 =new ImageView();
@@ -67,12 +76,19 @@ public class GameGui {
         cardPathLoader=new CardPathLoader();
     }
 
-
     private void initializeId() {
         myLeft= (ImageView) scene.lookup("#myLeft");
         myCenter= (ImageView) scene.lookup("#myCenter");
         myRight= (ImageView) scene.lookup("#myRight");
         adv1Right= (ImageView) scene.lookup("#adv1Right");
+        adv1Center= (ImageView) scene.lookup("#adv1Center");
+        adv1Left= (ImageView) scene.lookup("#adv1Left");
+        adv3Right= (ImageView) scene.lookup("#adv3Right");
+        adv3Center= (ImageView) scene.lookup("#adv3Center");
+        adv3Left= (ImageView) scene.lookup("#adv3Left");
+        adv4Right= (ImageView) scene.lookup("#adv4Right");
+        adv4Center= (ImageView) scene.lookup("#adv4Center");
+        adv4Left= (ImageView) scene.lookup("#adv4Left");
         cardPlayer1= (ImageView) scene.lookup("#cardPlayer1");
         cardPlayer2= (ImageView) scene.lookup("#cardPlayer2");
         cardPlayer3= (ImageView) scene.lookup("#cardPlayer3");
@@ -211,4 +227,71 @@ public class GameGui {
             cardPlayer4.setImage(null);
         }
     }
+
+    public void updateHand(Card c) throws RemoteException {
+        Platform.runLater(() ->{        System.out.println("sono in updateHand e la carta che devo mostrare è: " +c.getNum()+c.getSeed());
+            System.out.println("myLeft é: "+myLeft.getImage());
+            System.out.println("myCenter é: "+myCenter.getImage());
+            System.out.println("myRight é: "+myRight.getImage());
+
+            if (myLeft.getImage() == null){
+                myLeft.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+cardPathLoader.getPath(c.getId()))));
+            }
+            if (myCenter.getImage() == null){
+                myCenter.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+cardPathLoader.getPath(c.getId()))));
+            }
+            if (myRight.getImage() == null){
+                myRight.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+cardPathLoader.getPath(c.getId()))));
+            }
+            try {
+                updateAdvHand();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            System.out.println("ho aggiornato le carte, ora inizia un nuovo turno"); });
+
+
+    }
+
+    private void updateAdvHand() throws RemoteException {
+        if (adv1Right.getImage()==null) {
+            adv1Right.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+        }
+        else if (adv1Center.getImage()==null) {
+            adv1Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+        }
+        else if (adv1Left.getImage()==null) {
+            adv1Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+        }
+
+        if (Client.getInstance().getPlayerList().size()>2) {
+            updateOtherAdvHands();
+        }
+    }
+
+    private void updateOtherAdvHands() throws RemoteException {
+        if (Client.getInstance().getPlayerList().size()>=3) {
+            if (adv3Right.getImage()==null) {
+                adv3Right.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+            else if (adv3Center.getImage()==null) {
+                adv3Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+            else if (adv3Left.getImage()==null) {
+                adv3Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+        }
+        if (Client.getInstance().getPlayerList().size()==4) {
+            if (adv4Right.getImage()==null) {
+                adv4Right.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+            else if (adv4Center.getImage()==null) {
+                adv4Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+            else if (adv4Left.getImage()==null) {
+                adv4Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+        }
+    }
+
 }
