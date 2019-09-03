@@ -48,14 +48,10 @@ public class TwoPlayersGame extends Game {
     //the method getWinner returns the player who has won the turn
     @Override
     protected Player getWinner() {
-        System.out.println("sono in getWinner e le carte in turno sono "+getTurnCards().size());
-        System.out.println("sono in getWinner e le carte in turno sono:");
-        System.out.println(getTurnCards().values());
         switch(getNumBriscole()) {
             case 0:
                 return getBestNotBriscolaPlayer();
             case 1:
-                System.out.println("sono in getWinner allo switch 1");
                 return getBriscolaPlayer();
             case 2:
                 return getBestCardPlayer(getTurnCards());
@@ -68,8 +64,9 @@ public class TwoPlayersGame extends Game {
     //this new order starts from the winner of the turn
     @Override
     protected List<Player> reorderPlayersTurn() {
-        if (getWinner() == getPlayersTurn().get(1))
+        if (getWinner() == getPlayersTurn().get(1)){
             Collections.reverse(getPlayersTurn());
+        }
 
         return getPlayersTurn();
     }

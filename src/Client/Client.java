@@ -181,8 +181,9 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
 
     //Viene chiamato dalla grafica client, selezionando una carta
-    public void playCard(Card card) throws  RemoteException{
-        hand.remove(card);
+    public void playCard(Card card, int pos) throws  RemoteException{
+        hand.remove(pos, card);
+        System.out.println("sono in client-playcard e stampo la hand rimasta: "+hand.values());
         playerInterface.turnCard(card);
     }
 

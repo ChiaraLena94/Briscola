@@ -157,6 +157,11 @@ public class GameGui {
     }
 
     private void animateCardsWinner(String winner) throws RemoteException {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         cardAnimation1.setX(cardPlayer1.getX());
         cardAnimation1.setY(cardPlayer1.getY());
         setEqualsCardId();
@@ -370,13 +375,11 @@ public class GameGui {
     private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
         insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
         try {
-            Client.getInstance().playCard(Client.getInstance().getHand().get(idCard));
+            Client.getInstance().playCard(Client.getInstance().getHand().get(idCard),idCard);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        System.out.println("sono in gamegui-choose card e ho scelto la carta");
         deleteCorrectCard(idCard);
-        System.out.println("sono in gamegui-choose card e ho eliminato la carta corretta");
     }
 
     private void deleteCorrectCard(int idCard) {

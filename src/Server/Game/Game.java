@@ -124,8 +124,9 @@ public abstract class  Game {
 
     public Player getBriscolaPlayer(){
         for (Map.Entry<Player, Card> entry : getTurnCards().entrySet()) {
-            if(entry.getValue().getSeed()==briscola)
+            if(entry.getValue().getSeed()==briscola){
                 return entry.getKey();
+            }
         }
         System.out.println("non dovrei essere qui");
         return null;
@@ -206,7 +207,6 @@ public abstract class  Game {
     }
 
     public void endTurn() throws RemoteException {
-        System.out.println("sono in endTurn e stampo il numero di punti in questo turno: "+getTurnPoints());
         setNumBriscole();
         if (getNumPlayers()==4) {
             if (getWinner()==getPlayersTurn().get(0) || getWinner()==getPlayersTurn().get(2)){
@@ -219,10 +219,7 @@ public abstract class  Game {
             }
         }
         else getWinner().addPoints(getTurnPoints());
-        System.out.println("sono in endTurn e il vincitore del turno è: "+getWinner().getUsername());
         updateTurnWinner(getWinner().getUsername());
-        numBriscole=0;
-        num=0;
 
         if (!getDeck().isEmpty()) {
             playersTurn = reorderPlayersTurn();
@@ -234,6 +231,8 @@ public abstract class  Game {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+            numBriscole=0;
+            num=0;
         }
         else finishGame();
     }
