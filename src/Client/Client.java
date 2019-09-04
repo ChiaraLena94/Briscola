@@ -1,6 +1,7 @@
 package Client;
 
 import Client.Gui.GameGui;
+import Client.Gui.MainGui;
 import Core.Card;
 import Core.Deck;
 import Server.Game.Player;
@@ -122,13 +123,23 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void drawCard() throws RemoteException {
-
         int i=0;
         Card c = playerInterface.drawCard();
         i=getEmptyIndex();
         hand.put(i, c);
         gameGui.updateHand(c);
-        updateDeckLabel();
+        if (!(Integer.parseInt(gameGui.getDeckLabel().getText()) == 2))
+            updateDeckLabel();
+        else
+            deleteDeck();
+    }
+
+    private void deleteDeck() {
+        Platform.runLater(() ->{
+            gameGui.getDeckLabel().setText(" ");
+            gameGui.getDeck().setImage(null);});
+        gameGui.getBriscola().setImage(null);
+
     }
 
     private int getEmptyIndex() {
@@ -153,18 +164,29 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void notifyEndGame(String winner) throws RemoteException {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("End Game");
-        alert.setHeaderText("This game is finished!");
-        alert.setContentText("The winner is: "+winner);
-        alert.showAndWait();
+        System.out.println("\n\n\n sono in notifyendgame. Sono il player "+username);
+        System.out.println("la partita è finita e il vincitore è "+winner);
+        Platform.runLater(() ->{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("End Game");
+            alert.setHeaderText("This game is finished!");
+            alert.setContentText("The winner is: "+winner);
+            alert.showAndWait();});
+
+        Platform.runLater(() ->{
+            gameGui.getStage().close();
+            MainGui.getPrimaryStage().show();});
     }
 
     @Override
     public void updateWithPlayedCard(int idTurnCard) throws RemoteException {
         Platform.runLater(
                 () -> {
-                    gameGui.addCardToBoard(idTurnCard);
+                    try {
+                        gameGui.addCardToBoard(idTurnCard);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 }
         );
 
@@ -182,14 +204,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
                 }
         );
     }
-
-    @Override
-    public void notifyEmptyDeck() throws RemoteException {
-        //tolgo immagine da deck
-        gameGui.getDeck().setImage(null);
-        gameGui.getBriscola().setImage(null);
-    }
-
 
     public void updateDeckLabel() {
         Platform.runLater(() ->{

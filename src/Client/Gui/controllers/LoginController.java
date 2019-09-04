@@ -44,13 +44,10 @@ public class LoginController implements Initializable {
     public void login(ActionEvent actionEvent) throws IOException {
         if (numPlayers==2 || numPlayers==3 || numPlayers==4) {
             username.getText();
-            System.out.println("sono dentro il login in loginController. numPlayers è: " + numPlayers);
-            System.out.println("sono in login in logincontroller e username è: " + username.getText());
             if (usernameEmpty()) {
                 return;
             }
             else {
-                System.out.println("sono dentro il login in loginController numPlayers è: " + numPlayers);
                 try {
                     clientBriscola = Client.createInstance(username.getText());
                 } catch (RemoteException e) {
@@ -62,7 +59,7 @@ public class LoginController implements Initializable {
                 waitStage.setScene(new Scene(root, 800, 600));
                 waitStage.centerOnScreen();
                 clientBriscola.setBufferStage(waitStage);
-                MainGui.getPrimaryStage().close();
+                MainGui.getPrimaryStage().hide();
                 waitStage.show();
             }
 

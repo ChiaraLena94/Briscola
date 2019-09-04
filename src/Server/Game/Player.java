@@ -68,9 +68,6 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         clientPlayer.updateTurnWinner(turnWinnerPlayer);
     }
 
-    public void notifyEmptyDeck() throws RemoteException {
-        clientPlayer.notifyEmptyDeck();
-    }
 
     @Override
     public void turnCard(Card card) throws RemoteException {

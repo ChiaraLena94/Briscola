@@ -149,25 +149,55 @@ public class GameGui {
         return root;
     }
 
-    public void addCardToBoard(int idCard) {
+    public void addCardToBoard(int idCard) throws RemoteException {
         insertCard(cardPathLoader.getPath(idCard));
-        adv1Right.setImage(null);
+        if (adv1Right.getImage()==null) {
+            if (adv1Center.getImage()==null) {
+                adv1Left.setImage(null);
+            }
+            else adv1Center.setImage(null);
+        }
+        else adv1Right.setImage(null);
+
+        if (Client.getInstance().getPlayerList().size()>2) {
+
+            if (adv3Right.getImage()==null) {
+                if (adv3Center.getImage()==null) {
+                    adv3Left.setImage(null);
+                }
+                else adv3Center.setImage(null);
+            }
+            else adv3Right.setImage(null);
+        }
+
+        if (Client.getInstance().getPlayerList().size()==4) {
+
+            if (adv4Right.getImage()==null) {
+                if (adv4Center.getImage()==null) {
+                    adv4Left.setImage(null);
+                }
+                else adv4Center.setImage(null);
+            }
+            else adv4Right.setImage(null);
+        }
+
     }
 
-    public void insertCard (String image) {
+    public void insertCard (String image) throws RemoteException {
         initializeId();
-        System.out.println("printo cardPlayer1" +cardPlayer1);
         if (cardPlayer1.getImage()==null) {
             cardPlayer1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
         }
         else if (cardPlayer2.getImage()==null) {
             cardPlayer2.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
         }
-        else if (cardPlayer3.getImage()==null) {
-            cardPlayer3.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
-        }
-        else{
-            cardPlayer4.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
+        if (Client.getInstance().getPlayerList().size()>2) {
+            if (cardPlayer3.getImage()==null) {
+                cardPlayer3.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
+            }
+            else {
+                    cardPlayer4.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/" + image)));
+            }
         }
     }
 
@@ -394,12 +424,20 @@ public class GameGui {
 
     private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
         insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
-        try {
+        try{
             Client.getInstance().playCard(Client.getInstance().getHand().get(idCard),idCard);
-        } catch (RemoteException e) {
+        }catch(RemoteException |NullPointerException e) {
             e.printStackTrace();
         }
         deleteCorrectCard(idCard);
+    }
+
+    private void checkLast() {
+        if (Client.getInstance().getHand().size() == 1){
+            System.out.println("\n\n SONO RIMASTO CON UNA CARTA");
+            System.out.println(Client.getInstance().getHand().values());
+        }else
+            System.out.println("HO PIU DI UNA CARTA");
     }
 
     private void deleteCorrectCard(int idCard) {

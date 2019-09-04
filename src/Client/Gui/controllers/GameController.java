@@ -129,7 +129,6 @@ public class GameController implements Initializable {
         }
     }
 
-
     private void setNumOfCardsInDeck() throws RemoteException {
         if (Client.getInstance().getPlayerList().size()==3 ) {
             deckLabel.setText("30");

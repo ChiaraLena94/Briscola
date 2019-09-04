@@ -240,7 +240,10 @@ public abstract class  Game {
     }
 
     private void deckEmpty(){
-        if(numOfFinalTurnsPlayed==3) finishGame();
+        numBriscole=0;
+        num=0;
+        System.out.println("sono in game deckEmpty e il numero di turni finali giocati è: "+numOfFinalTurnsPlayed);
+        if(numOfFinalTurnsPlayed==2) finishGame();
         else {
             numOfFinalTurnsPlayed++;
             if(finalTurns==false){
@@ -248,7 +251,6 @@ public abstract class  Game {
                 playersTurn = reorderPlayersTurn();
                 getTurnCards().clear();
                 try {
-                    notifyPlayersEmptyDeck();
                     playTurn(getPlayersTurn().get(0));
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -264,17 +266,6 @@ public abstract class  Game {
                 }
             }
 
-        }
-    }
-
-    protected  void notifyPlayersEmptyDeck(){
-        for(Player p : playersTurn){
-            System.out.println("Sono in game-dekEmpty, il client è: "+p.getUsername());
-            try {
-                p.notifyEmptyDeck();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
         }
     }
 
