@@ -21,4 +21,6 @@ public interface ClientInterface extends Remote {
 
     public void updateTurnWinner(String turnWinnerPlayer) throws RemoteException;
 
+    public void notifyEmptyDeck() throws RemoteException;
+
 }

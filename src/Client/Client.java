@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -126,9 +127,8 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         Card c = playerInterface.drawCard();
         i=getEmptyIndex();
         hand.put(i, c);
-
-        System.out.println("la carta pescata è: "+c.getNum()+c.getSeed());
         gameGui.updateHand(c);
+        updateDeckLabel();
     }
 
     private int getEmptyIndex() {
@@ -153,7 +153,11 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void notifyEndGame(String winner) throws RemoteException {
-        //a grafica ti appare se hai vinto o meno
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("End Game");
+        alert.setHeaderText("This game is finished!");
+        alert.setContentText("The winner is: "+winner);
+        alert.showAndWait();
     }
 
     @Override
@@ -179,11 +183,28 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         );
     }
 
+    @Override
+    public void notifyEmptyDeck() throws RemoteException {
+        //tolgo immagine da deck
+        gameGui.getDeck().setImage(null);
+        gameGui.getBriscola().setImage(null);
+    }
+
+
+    public void updateDeckLabel() {
+        Platform.runLater(() ->{
+            try {
+                gameGui.getDeckLabel().setText(String.valueOf(Integer.parseInt(gameGui.getDeckLabel().getText()) -getPlayerList().size()));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
 
     //Viene chiamato dalla grafica client, selezionando una carta
     public void playCard(Card card, int pos) throws  RemoteException{
         hand.remove(pos, card);
-        System.out.println("sono in client-playcard e stampo la hand rimasta: "+hand.values());
         playerInterface.turnCard(card);
     }
 

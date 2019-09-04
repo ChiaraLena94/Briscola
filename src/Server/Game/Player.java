@@ -68,12 +68,13 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         clientPlayer.updateTurnWinner(turnWinnerPlayer);
     }
 
+    public void notifyEmptyDeck() throws RemoteException {
+        clientPlayer.notifyEmptyDeck();
+    }
+
     @Override
     public void turnCard(Card card) throws RemoteException {
-        System.out.println("sono nel player" +username+", adesso aggiungo la carta a turnCards");
         game.addCardToTurn(card,this);
-        System.out.println("sono in player-turncard: la carta è "+card.getId()+card.getNum()+"stampo il seed"+card.getSeed()+"ho finito di stampare il seed"+card.getScore());
-        System.out.println("la briscola di questo game è: "+game.getBriscola()+"fine seed");
     }
 
     @Override
@@ -104,4 +105,5 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         game.getPlayers().forEach((k,v) -> mapPoints.put(v.getUsername(), v.getPoints()));
         return mapPoints;
     }
+
 }

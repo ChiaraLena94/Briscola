@@ -26,6 +26,11 @@
       </ImageView>
       <ImageView fx:id="adv1Right" fitHeight="100.0" layoutX="475.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" rotate="20.0">
       </ImageView>
+      <Label fx:id="deckLabel" layoutX="250" layoutY="250" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Label>
       <ImageView fx:id="deck" fitHeight="125.0" fitWidth="200.0" layoutX="200.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
       <ImageView fx:id="cardPlayer1" fitHeight="150.0" layoutX="370.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">

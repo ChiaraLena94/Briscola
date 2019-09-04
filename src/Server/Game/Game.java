@@ -1,5 +1,6 @@
 package Server.Game;
 
+import Client.Client;
 import Core.Card;
 import Core.Deck;
 import Core.EnumHandler;
@@ -21,7 +22,8 @@ public abstract class  Game {
     private EnumHandler enumHandler;
     private int numBriscole;
     private int numPlayerMaxCard;
-    int num=0;
+    int num=0, numOfFinalTurnsPlayed=0;
+    private boolean finalTurns=false;
 
     //getter methods
     public int getNumBriscole() {
@@ -234,8 +236,48 @@ public abstract class  Game {
             numBriscole=0;
             num=0;
         }
-        else finishGame();
+        else deckEmpty();
     }
+
+    private void deckEmpty(){
+        if(numOfFinalTurnsPlayed==3) finishGame();
+        else {
+            numOfFinalTurnsPlayed++;
+            if(finalTurns==false){
+                finalTurns=true;
+                playersTurn = reorderPlayersTurn();
+                getTurnCards().clear();
+                try {
+                    notifyPlayersEmptyDeck();
+                    playTurn(getPlayersTurn().get(0));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                playersTurn = reorderPlayersTurn();
+                getTurnCards().clear();
+                try {
+                    playTurn(getPlayersTurn().get(0));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    protected  void notifyPlayersEmptyDeck(){
+        for(Player p : playersTurn){
+            System.out.println("Sono in game-dekEmpty, il client è: "+p.getUsername());
+            try {
+                p.notifyEmptyDeck();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void endGame(String winner) {
         for (int i=0; i<getPlayersTurn().size(); i++) {
@@ -260,12 +302,10 @@ public abstract class  Game {
     }
 
     public void addCardToTurn(Card turnCard, Player p){
-        System.out.println("sono in game in addTurnCards per aggiungere la carta alle carte in turno");
         getTurnCards().put(p, turnCard);
         try {
             updateWithPlayedCards(turnCard, p);
             playTurn(nextPlayer(p));
-            System.out.println("sono arrivato alla fine di addCardToTurn");
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -330,4 +370,6 @@ public abstract class  Game {
     //it returns tha player who has the highest number of points at the end of the game
     //it returns null if the game ends in a tie
     protected abstract Player getGameWinner();
+
+
 }

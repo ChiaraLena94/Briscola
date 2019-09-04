@@ -42,6 +42,7 @@ public class GameGui {
     private ImageView cardPlayer3 =new ImageView();
     private ImageView cardPlayer4 =new ImageView();
     private Label myName = new Label();
+    private Label deckLabel = new Label();
     private Label myPoints = new Label();
     private Label nameAdv1 = new Label();
     private Label nameAdv3 = new Label();
@@ -50,6 +51,8 @@ public class GameGui {
     private ImageView deckAdv1 =new ImageView();
     private ImageView deckAdv3 =new ImageView();
     private ImageView deckAdv4 =new ImageView();
+    private ImageView deck =new ImageView();
+    private ImageView briscola =new ImageView();
     private ImageView cardAnimation1 = new ImageView();
     private ImageView cardAnimation2 = new ImageView();
     private ImageView cardAnimation3 = new ImageView();
@@ -79,6 +82,18 @@ public class GameGui {
         return myRight;
     }
 
+    public ImageView getDeck() {
+        return deck;
+    }
+
+    public ImageView getBriscola() {
+        return briscola;
+    }
+
+    public Label getDeckLabel() {
+        return deckLabel;
+    }
+
     //GameGui constructor
     public GameGui() throws IOException {
         Parent window = createContent();
@@ -92,6 +107,7 @@ public class GameGui {
             });
         cardPathLoader=new CardPathLoader();
     }
+
 
     private void initializeId() {
         myLeft= (ImageView) scene.lookup("#myLeft");
@@ -123,6 +139,9 @@ public class GameGui {
         deckAdv4= (ImageView) scene.lookup("#deckAdv4");
         myPoints= (Label) scene.lookup("#myPoints");
         controlLabel= (Label) scene.lookup("#controlLabel");
+        deck= (ImageView) scene.lookup("#deck");
+        briscola= (ImageView) scene.lookup("#briscola");
+        deckLabel= (Label) scene.lookup("#deckLabel");
     }
 
     public Parent createContent() throws IOException {
@@ -158,7 +177,7 @@ public class GameGui {
 
     private void animateCardsWinner(String winner) throws RemoteException {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -212,6 +231,7 @@ public class GameGui {
                 System.out.println("i punti sono: "+(entry.getValue().toString()));
             }
         }
+
     }
 
     private void setEqualsCardId (){
@@ -353,7 +373,7 @@ public class GameGui {
     }
 
     private void changeControl(){
-        controlLabel.setText("iil tuo turno  finito, ora tocca al tuo avversario");
+        controlLabel.setText("non tocca a te");
         removeCardListener();
 
     }

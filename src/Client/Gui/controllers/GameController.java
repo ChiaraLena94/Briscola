@@ -95,6 +95,9 @@ public class GameController implements Initializable {
     @FXML
     public Label controlLabel;
 
+    @FXML
+    public Label deckLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         hand= Client.getInstance().getHand();
@@ -105,6 +108,11 @@ public class GameController implements Initializable {
         deck.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         myName.setText(Client.getInstance().getUsername());
         myPoints.setText("0");
+        try {
+            setNumOfCardsInDeck();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         try {
             playerList=Client.getInstance().getPlayerList();
             playerList.remove(Client.getInstance().getUsername());
@@ -119,6 +127,15 @@ public class GameController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void setNumOfCardsInDeck() throws RemoteException {
+        if (Client.getInstance().getPlayerList().size()==3 ) {
+            deckLabel.setText("30");
+        }
+        else deckLabel.setText("34");
+        System.out.println("sono in gameController e ho appena inizializzato deckLabel che è: "+deckLabel.getText());
     }
 
     private void addFirstListener(){
