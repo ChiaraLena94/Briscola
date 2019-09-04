@@ -1,6 +1,7 @@
 package Client;
 
 import Client.Gui.GameGui;
+import Client.Gui.LoginGui;
 import Client.Gui.MainGui;
 import Core.Card;
 import Core.Deck;
@@ -172,10 +173,22 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
             alert.setHeaderText("This game is finished!");
             alert.setContentText("The winner is: "+winner);
             alert.showAndWait();});
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Platform.runLater(() ->{
             gameGui.getStage().close();
-            MainGui.getPrimaryStage().show();});
+            try {
+                LoginGui.createLoginGui();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            MainGui.getPrimaryStage().show();
+            });
     }
 
     @Override
@@ -214,7 +227,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
             }
         });
     }
-
 
     //Viene chiamato dalla grafica client, selezionando una carta
     public void playCard(Card card, int pos) throws  RemoteException{

@@ -15,7 +15,11 @@ public class Deck {
         if(!normalDeck)
             deck.remove(2);
         shuffleDeck();
-        briscolaCard=deck.get(39);
+        try {
+            briscolaCard=deck.get(39);
+        }catch (Exception e){
+            briscolaCard=deck.get(38); }
+
     }
 
     private void shuffleDeck(){

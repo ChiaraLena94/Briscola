@@ -151,6 +151,7 @@ public class GameGui {
 
     public void addCardToBoard(int idCard) throws RemoteException {
         insertCard(cardPathLoader.getPath(idCard));
+
         if (adv1Right.getImage()==null) {
             if (adv1Center.getImage()==null) {
                 adv1Left.setImage(null);
@@ -185,20 +186,20 @@ public class GameGui {
 
     public void insertCard (String image) throws RemoteException {
         initializeId();
-        if (cardPlayer1.getImage()==null) {
-            cardPlayer1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
-        }
-        else if (cardPlayer2.getImage()==null) {
-            cardPlayer2.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
-        }
-        if (Client.getInstance().getPlayerList().size()>2) {
-            if (cardPlayer3.getImage()==null) {
-                cardPlayer3.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+image)));
-            }
-            else {
+        if (cardPlayer1.getImage() == null) {
+            cardPlayer1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/" + image)));
+        } else {
+            if (cardPlayer2.getImage() == null) {
+                cardPlayer2.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/" + image)));
+            } else {
+                if (cardPlayer3.getImage() == null) {
+                    cardPlayer3.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/" + image)));
+                } else {
                     cardPlayer4.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/" + image)));
+                }
             }
         }
+
     }
 
     public void endTurn(String turnWinnerPlayer) throws RemoteException {
@@ -336,13 +337,16 @@ public class GameGui {
         if (adv1Right.getImage()==null) {
             adv1Right.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
         }
-        else if (adv1Center.getImage()==null) {
-            adv1Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+        else {
+            if (adv1Center.getImage()==null) {
+                adv1Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+            else {
+                if (adv1Left.getImage()==null) {
+                    adv1Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+                }
+            }
         }
-        else if (adv1Left.getImage()==null) {
-            adv1Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
-        }
-
         if (Client.getInstance().getPlayerList().size()>2) {
             updateOtherAdvHands();
         }
@@ -353,22 +357,31 @@ public class GameGui {
             if (adv3Right.getImage()==null) {
                 adv3Right.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
             }
-            else if (adv3Center.getImage()==null) {
-                adv3Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
-            }
-            else if (adv3Left.getImage()==null) {
-                adv3Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            else {
+                if (adv3Center.getImage()==null) {
+                    adv3Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+                }
+                else {
+                    if (adv3Left.getImage()==null) {
+                        adv3Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+                    }
+                }
             }
         }
+
         if (Client.getInstance().getPlayerList().size()==4) {
             if (adv4Right.getImage()==null) {
                 adv4Right.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
             }
-            else if (adv4Center.getImage()==null) {
-                adv4Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
-            }
-            else if (adv4Left.getImage()==null) {
-                adv4Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            else {
+                if (adv4Center.getImage()==null) {
+                    adv4Center.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+                }
+                else {
+                    if (adv4Left.getImage()==null) {
+                        adv4Left.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+                    }
+                }
             }
         }
     }

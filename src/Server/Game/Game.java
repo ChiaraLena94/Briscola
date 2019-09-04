@@ -278,6 +278,7 @@ public abstract class  Game {
                 e.printStackTrace();
             }
         }
+
     }
 
     public void finishGame(){
