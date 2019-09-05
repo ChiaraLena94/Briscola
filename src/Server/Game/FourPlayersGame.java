@@ -11,10 +11,6 @@ public class FourPlayersGame extends Game {
 
     public FourPlayersGame(int numPlayers) {
         super(numPlayers);
-        getPlayersTurn().get(0).setTeam("team1");
-        getPlayersTurn().get(2).setTeam("team1");
-        getPlayersTurn().get(1).setTeam("team2");
-        getPlayersTurn().get(3).setTeam("team2");
     }
 
     //the method getBestNotBriscolaPlayer returns an object Player that is the winner of the turn if no one has played
@@ -31,10 +27,9 @@ public class FourPlayersGame extends Game {
                 if(entry.getValue().getSeed() == getTurnCards().get(getPlayersTurn().get(0)).getSeed()) {
                     playersTemp.put(entry.getKey(), entry.getValue());
                 }
-                return getBestCardPlayer(playersTemp);
             }
+            return getBestCardPlayer(playersTemp);
         }
-        return null;
     }
 
     //the method getBestBriscolaPlayer returns turn winner Player between all players

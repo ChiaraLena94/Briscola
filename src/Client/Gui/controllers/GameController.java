@@ -113,15 +113,22 @@ public class GameController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
         try {
             playerList=Client.getInstance().getPlayerList();
-            playerList.remove(Client.getInstance().getUsername());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        if (playerList.size()==4) {
+                initialize4AdvBoard(playerList);
+            }
+        else {
+            playerList.remove(Client.getInstance().getUsername());
+            initializeAdv1(playerList.get(0));
+            initializeOtherAdv();
+        }
         addFirstListener();
-        initializeAdv1();
-        initializeOtherAdv();
         try {
             briscola.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(Client.getInstance().getPlayerInterface().getBriscolaCard().getId()))));
         } catch (RemoteException e) {
@@ -129,12 +136,28 @@ public class GameController implements Initializable {
         }
     }
 
+    private void initialize4AdvBoard(List<String> playerList ) {
+        playerList.add(playerList.get(0));
+        playerList.add(playerList.get(1));
+        playerList.add(playerList.get(2));
+        for(int i=0; i<playerList.size()-3; i++){
+            if (Client.getInstance().getUsername().equals(playerList.get(i))) {
+                initializeAdv1(playerList.get(i+2));
+                initializeAdv3(playerList.get(i+1));
+                initializeAdv4(playerList.get(i+3));
+            }
+        }
+    }
+
     private void setNumOfCardsInDeck() throws RemoteException {
         if (Client.getInstance().getPlayerList().size()==3 ) {
             deckLabel.setText("30");
         }
-        else deckLabel.setText("34");
-        System.out.println("sono in gameController e ho appena inizializzato deckLabel che è: "+deckLabel.getText());
+        else if (Client.getInstance().getPlayerList().size()==4) {
+            deckLabel.setText("28");
+        }
+        else if (Client.getInstance().getPlayerList().size()==2)
+            deckLabel.setText("34");
     }
 
     private void addFirstListener(){
@@ -168,7 +191,6 @@ public class GameController implements Initializable {
         gameGui.insertCard(Client.getInstance().getUsername(),cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
         Client.getInstance().playCard(Client.getInstance().getHand().get(idCard),idCard);
         deleteCorrectCard(idCard);
-        System.out.println("sono in gamecontroller: la posizione della carta che ho scelto è:  "+idCard);
     }
 
     private void deleteCorrectCard(int idCard) {
@@ -177,25 +199,22 @@ public class GameController implements Initializable {
         else myRight.setImage(null);
     }
 
-    private void initializeAdv1() {
-        nameAdv1.setText(playerList.get(0));
-        playerList.remove(0);
+    private void initializeAdv1(String p) {
+        nameAdv1.setText(p);
         adv1Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv1Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv1Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
     }
 
-    private void initializeAdv3() {
-        nameAdv3.setText(playerList.get(0));
-        playerList.remove(0);
+    private void initializeAdv3(String p) {
+        nameAdv3.setText(p);
         adv3Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv3Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv3Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
     }
 
-    private void initializeAdv4() {
-        nameAdv4.setText(playerList.get(0));
-        playerList.remove(0);
+    private void initializeAdv4(String p) {
+        nameAdv4.setText(p);
         adv4Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv4Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv4Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
@@ -204,9 +223,9 @@ public class GameController implements Initializable {
     private void initializeOtherAdv() {
         try {
             if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()>2) {
-                initializeAdv3();
+                initializeAdv3(playerList.get(1));
                 if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()==4){
-                    initializeAdv4();
+                    initializeAdv4(playerList.get(2));
                 }
             }
         } catch (RemoteException e) {

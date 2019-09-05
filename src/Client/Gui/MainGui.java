@@ -5,8 +5,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 
 public class MainGui extends Application {
@@ -24,7 +24,8 @@ public class MainGui extends Application {
         primaryStage.setTitle("Briscola");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.centerOnScreen();
-        //primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Resources/retroCarta.png")));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }

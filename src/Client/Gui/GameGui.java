@@ -115,17 +115,21 @@ public class GameGui {
     private void initializeAdvMap() {
         try {
             playerList = Client.getInstance().getPlayerList();
+
+                playerList.remove(Client.getInstance().getUsername());
+                try{
+                    advMap.put(playerList.get(0),1);
+                    advMap.put(playerList.get(1),3);
+                    advMap.put(playerList.get(2),4);
+                }catch (IndexOutOfBoundsException n){
+                    System.out.println("\n\nStampo Grandezza ADV MAP"+ advMap.size());
+                }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        playerList.remove(Client.getInstance().getUsername());
-        try{
-            advMap.put(playerList.get(0),1);
-            advMap.put(playerList.get(1),3);
-            advMap.put(playerList.get(2),4);
-        }catch (IndexOutOfBoundsException n){
-            System.out.println("\n\nStampo Grandezza ADV MAP"+ advMap.size());
-        }}
+
+    }
+
 
     private void initializeId() {
         myLeft= (ImageView) scene.lookup("#myLeft");

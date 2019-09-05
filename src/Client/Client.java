@@ -129,11 +129,12 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         i=getEmptyIndex();
         hand.put(i, c);
         gameGui.updateHand(c);
-        if (!(Integer.parseInt(gameGui.getDeckLabel().getText()) == 2))
+        if (!(Integer.parseInt(gameGui.getDeckLabel().getText()) == getPlayerList().size()))
             updateDeckLabel();
         else
             deleteDeck();
     }
+
 
     private void deleteDeck() {
         Platform.runLater(() ->{

@@ -98,6 +98,12 @@ public abstract class  Game {
         turnCards = new HashMap<>();
         playersTurn = new ArrayList<>();
         getPlayers().forEach((k,v) -> playersTurn.add(v));
+        if (playersTurn.size()==4) {
+            playersTurn.get(0).setTeam("team1");
+            playersTurn.get(2).setTeam("team1");
+            playersTurn.get(1).setTeam("team2");
+            playersTurn.get(3).setTeam("team2");
+        }
         sendDeckToPlayer();
         try {
             playTurn(playersTurn.get(0));
