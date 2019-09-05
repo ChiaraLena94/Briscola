@@ -269,7 +269,6 @@ public abstract class  Game {
         }
     }
 
-
     public void endGame(String winner) {
         for (int i=0; i<getPlayersTurn().size(); i++) {
             try {
@@ -362,6 +361,5 @@ public abstract class  Game {
     //it returns tha player who has the highest number of points at the end of the game
     //it returns null if the game ends in a tie
     protected abstract Player getGameWinner();
-
 
 }

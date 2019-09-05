@@ -127,7 +127,6 @@ public class GameGui {
             System.out.println("\n\nStampo Grandezza ADV MAP"+ advMap.size());
         }}
 
-
     private void initializeId() {
         myLeft= (ImageView) scene.lookup("#myLeft");
         myCenter= (ImageView) scene.lookup("#myCenter");
@@ -437,15 +436,15 @@ public class GameGui {
 
     private void removeCardListener() {
         myLeft.setOnMouseClicked(mouseEvent -> {
-            //labelTurn.setText("non è il  tuo turno");
+            //labelTurn.setText("aspetta il  tuo turno");
         });
 
         myCenter.setOnMouseClicked(mouseEvent -> {
-            //labelTurn.setText("non è il  tuo turno");
+            //labelTurn.setText("aspetta il  tuo turno");
         });
 
         myRight.setOnMouseClicked(mouseEvent -> {
-            //labelTurn.setText("non è il  tuo turno");
+            //labelTurn.setText("aspetta il  tuo turno");
         });
     }
 

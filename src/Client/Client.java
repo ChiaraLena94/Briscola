@@ -138,9 +138,8 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     private void deleteDeck() {
         Platform.runLater(() ->{
             gameGui.getDeckLabel().setText(" ");
-            gameGui.getDeck().setImage(null);});
-        gameGui.getBriscola().setImage(null);
-
+            gameGui.getDeck().setImage(null);
+            gameGui.getBriscola().setImage(null);});
     }
 
     private int getEmptyIndex() {
