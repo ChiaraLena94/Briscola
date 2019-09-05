@@ -116,11 +116,14 @@ public class GameGui {
         try {
             playerList = Client.getInstance().getPlayerList();
 
-                playerList.remove(Client.getInstance().getUsername());
                 try{
-                    advMap.put(playerList.get(0),1);
-                    advMap.put(playerList.get(1),3);
-                    advMap.put(playerList.get(2),4);
+                    if (Client.getInstance().getPlayerList().size()!=4) {
+                        playerList.remove(Client.getInstance().getUsername());
+                        advMap.put(playerList.get(0),1);
+                        advMap.put(playerList.get(1),3);
+                        advMap.put(playerList.get(2),4);
+                    }
+                    else initialize4AdvMap(playerList);
                 }catch (IndexOutOfBoundsException n){
                     System.out.println("\n\nStampo Grandezza ADV MAP"+ advMap.size());
                 }
@@ -130,6 +133,42 @@ public class GameGui {
 
     }
 
+    private void initialize4AdvMap(List<String> playerList) {
+        int pos=10;
+        playerList.add(playerList.get(0));
+        playerList.add(playerList.get(1));
+        playerList.add(playerList.get(2));
+        for(int i=0; i<playerList.size()-3; i++){
+            if (Client.getInstance().getUsername().equals(playerList.get(i))) {
+                pos=i;
+            }
+        }
+        switch(pos) {
+            case 0:
+                advMap.put(playerList.get(0),3);
+                advMap.put(playerList.get(1),1);
+                advMap.put(playerList.get(2),4);
+                break;
+
+            case 1:
+                advMap.put(playerList.get(0),4);
+                advMap.put(playerList.get(1),3);
+                advMap.put(playerList.get(2),1);
+                break;
+
+            case 2:
+                advMap.put(playerList.get(0),1);
+                advMap.put(playerList.get(1),4);
+                advMap.put(playerList.get(2),3);
+                break;
+
+            case 3:
+                advMap.put(playerList.get(0),3);
+                advMap.put(playerList.get(1),1);
+                advMap.put(playerList.get(2),4);
+                break;
+        }
+    }
 
     private void initializeId() {
         myLeft= (ImageView) scene.lookup("#myLeft");
