@@ -60,8 +60,8 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         clientPlayer.selectCard();
     }
 
-    public void updateWithPlayedCard(int idTurnCard) throws RemoteException {
-        clientPlayer.updateWithPlayedCard(idTurnCard);
+    public void updateWithPlayedCard(String username, int idTurnCard) throws RemoteException {
+        clientPlayer.updateWithPlayedCard(username,idTurnCard);
     }
 
     public void updateTurnWinner(String turnWinnerPlayer) throws RemoteException {

@@ -192,11 +192,11 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     }
 
     @Override
-    public void updateWithPlayedCard(int idTurnCard) throws RemoteException {
+    public void updateWithPlayedCard(String lastPlayer,int idTurnCard) throws RemoteException {
         Platform.runLater(
                 () -> {
                     try {
-                        gameGui.addCardToBoard(idTurnCard);
+                        gameGui.addCardToBoard(lastPlayer, idTurnCard);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }

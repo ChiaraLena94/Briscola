@@ -165,7 +165,7 @@ public class GameController implements Initializable {
 
     private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
         gameGui=Client.getInstance().getGameGui();
-        gameGui.insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
+        gameGui.insertCard(Client.getInstance().getUsername(),cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
         Client.getInstance().playCard(Client.getInstance().getHand().get(idCard),idCard);
         deleteCorrectCard(idCard);
         System.out.println("sono in gamecontroller: la posizione della carta che ho scelto è:  "+idCard);

@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,12 +14,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static sun.audio.AudioPlayer.player;
 
 public class GameGui {
     private Scene scene;
@@ -60,6 +60,8 @@ public class GameGui {
     private ImageView myDeck =new ImageView();
     private CardPathLoader cardPathLoader;
     private Parent root;
+    private List<String> playerList = new ArrayList<>();
+    private Map<String, Integer> advMap = new HashMap();
 
     //getter methods
     public Stage getStage() {
@@ -97,16 +99,33 @@ public class GameGui {
     //GameGui constructor
     public GameGui() throws IOException {
         Parent window = createContent();
-            Platform.runLater(()-> {
-                stage = MainGui.getPrimaryStage();
-                scene= new Scene(window);
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.setTitle(Client.getInstance().getUsername());
-                stage.show();
-            });
+        Platform.runLater(()-> {
+            stage = MainGui.getPrimaryStage();
+            scene= new Scene(window);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setTitle(Client.getInstance().getUsername());
+            stage.show();
+            initializeId();
+        });
         cardPathLoader=new CardPathLoader();
+        initializeAdvMap();
     }
+
+    private void initializeAdvMap() {
+        try {
+            playerList = Client.getInstance().getPlayerList();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        playerList.remove(Client.getInstance().getUsername());
+        try{
+            advMap.put(playerList.get(0),1);
+            advMap.put(playerList.get(1),3);
+            advMap.put(playerList.get(2),4);
+        }catch (IndexOutOfBoundsException n){
+            System.out.println("\n\nStampo Grandezza ADV MAP"+ advMap.size());
+        }}
 
 
     private void initializeId() {
@@ -149,43 +168,42 @@ public class GameGui {
         return root;
     }
 
-    public void addCardToBoard(int idCard) throws RemoteException {
-        insertCard(cardPathLoader.getPath(idCard));
-
-        if (adv1Right.getImage()==null) {
-            if (adv1Center.getImage()==null) {
-                adv1Left.setImage(null);
-            }
-            else adv1Center.setImage(null);
-        }
-        else adv1Right.setImage(null);
-
-        if (Client.getInstance().getPlayerList().size()>2) {
-
-            if (adv3Right.getImage()==null) {
-                if (adv3Center.getImage()==null) {
-                    adv3Left.setImage(null);
+    public void addCardToBoard(String lastPlayer, int idCard) throws RemoteException {
+        insertCard(lastPlayer,cardPathLoader.getPath(idCard));
+        System.out.println("\n\n\n"+ lastPlayer+ "CIAONE");
+        int last = advMap.get(lastPlayer);
+        System.out.println("\n\n Sono il giocatore"+ Client.getInstance().getUsername()+" E VEDO che ha giocato il giocatore"+ last+"\n\n");
+        switch (last){
+            case 1:
+                if (adv1Right.getImage()==null) {
+                    if (adv1Center.getImage()==null) {
+                        adv1Left.setImage(null);
+                    }
+                    else adv1Center.setImage(null);
+                }else adv1Right.setImage(null);
+                break;
+            case 3:
+                if (adv3Right.getImage()==null) {
+                    if (adv3Center.getImage()==null) {
+                        adv3Left.setImage(null);
+                    }
+                    else adv3Center.setImage(null);
                 }
-                else adv3Center.setImage(null);
-            }
-            else adv3Right.setImage(null);
-        }
-
-        if (Client.getInstance().getPlayerList().size()==4) {
-
-            if (adv4Right.getImage()==null) {
-                if (adv4Center.getImage()==null) {
-                    adv4Left.setImage(null);
+                else adv3Right.setImage(null);
+                break;
+            case 4:
+                if (adv4Right.getImage()==null) {
+                    if (adv4Center.getImage()==null) {
+                        adv4Left.setImage(null);
+                    }
+                    else adv4Center.setImage(null);
                 }
-                else adv4Center.setImage(null);
-            }
-            else adv4Right.setImage(null);
+                else adv4Right.setImage(null);
+                break;
         }
-
     }
 
-    public void insertCard (String image) throws RemoteException {
-        initializeId();
+    public void insertCard(String lastPlayer, String image) throws RemoteException {
         if (cardPlayer1.getImage() == null) {
             cardPlayer1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/" + image)));
         } else {
@@ -235,12 +253,12 @@ public class GameGui {
         Platform.runLater(() ->{
             cardAnimation1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
             if(winner.equals(Client.getInstance().getUsername())) {
-            new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.millis(5000)).playAnimation();
-            myDeck.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
-        }
-        else {
-            createAdvDeck(winner);
-        }
+                new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.millis(5000)).playAnimation();
+                myDeck.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
+            }
+            else {
+                createAdvDeck(winner);
+            }
 
             cardAnimation1.setImage(null);
             cardAnimation1.setX(cardPlayer1.getX());
@@ -309,11 +327,7 @@ public class GameGui {
     }
 
     public void updateHand(Card c) throws RemoteException {
-        Platform.runLater(() ->{        System.out.println("sono in updateHand e la carta che devo mostrare è: " +c.getNum()+c.getSeed());
-            System.out.println("myLeft é: "+myLeft.getImage());
-            System.out.println("myCenter é: "+myCenter.getImage());
-            System.out.println("myRight é: "+myRight.getImage());
-
+        Platform.runLater(() ->{
             if (myLeft.getImage() == null){
                 myLeft.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/"+cardPathLoader.getPath(c.getId()))));
             }
@@ -328,8 +342,8 @@ public class GameGui {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-            System.out.println("ho aggiornato le carte, ora inizia un nuovo turno"); });
-
+            System.out.println("ho aggiornato le carte, ora inizia un nuovo turno");
+        });
 
     }
 
@@ -436,7 +450,7 @@ public class GameGui {
     }
 
     private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
-        insertCard(cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
+        insertCard(Client.getInstance().getUsername(), cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
         try{
             Client.getInstance().playCard(Client.getInstance().getHand().get(idCard),idCard);
         }catch(RemoteException |NullPointerException e) {

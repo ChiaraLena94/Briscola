@@ -17,9 +17,8 @@ public interface ClientInterface extends Remote {
 
     public void notifyEndGame(String winner) throws RemoteException;
 
-    public void updateWithPlayedCard(int idTurnCard) throws RemoteException;
+    public void updateWithPlayedCard(String lastPlayer, int idTurnCard) throws RemoteException;
 
     public void updateTurnWinner(String turnWinnerPlayer) throws RemoteException;
-
 
 }

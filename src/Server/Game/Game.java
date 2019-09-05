@@ -307,7 +307,7 @@ public abstract class  Game {
         playersTurn.forEach(player -> {
             if(!(player==p)) {
                 try {
-                    player.updateWithPlayedCard(turnCard.getId());
+                    player.updateWithPlayedCard(p.getUsername(),turnCard.getId());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

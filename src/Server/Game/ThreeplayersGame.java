@@ -15,18 +15,19 @@ public class ThreeplayersGame extends Game {
    @Override
    protected Player getBestNotBriscolaPlayer() {
         if (getTurnCards().get(getPlayersTurn().get(0)).getSeed() == getTurnCards().get(getPlayersTurn().get(1)).getSeed() &&
-                getTurnCards().get(getPlayersTurn().get(1)).getSeed() == getTurnCards().get(getPlayersTurn().get(2)).getSeed())
+                getTurnCards().get(getPlayersTurn().get(1)).getSeed() == getTurnCards().get(getPlayersTurn().get(2)).getSeed()) {
             return getBestCardPlayer(getTurnCards());
+        }
         else {
             playersTemp= new HashMap<>();
             for (Map.Entry<Player, Card> entry : getTurnCards().entrySet()) {
                 if(entry.getValue().getSeed() == getTurnCards().get(getPlayersTurn().get(0)).getSeed()) {
                     playersTemp.put(entry.getKey(), entry.getValue());
                 }
-                return getBestCardPlayer(playersTemp);
             }
+            System.out.println("sono nel ramo else e stampo la mappa temporanea dei giocatori: " +playersTemp.values());
+            return getBestCardPlayer(playersTemp);
         }
-        return null;
     }
 
    //the method getBestBriscolaPlayer returns turn winner Player between all players
@@ -60,19 +61,23 @@ public class ThreeplayersGame extends Game {
    //the method getWinner returns the player who has won the turn
    @Override
    protected Player getWinner(){
-        switch(getNumBriscole()) {
-            case 0:
-                return getBestNotBriscolaPlayer();
-            case 1:
-                return getBriscolaPlayer();
-            case 2:
-                return getBestBriscolaPlayer();
-            case 3:
-                return getBestCardPlayer(getTurnCards());
-            default:
-                System.out.println("ERROR");
-                return null;
-        }
+       switch(getNumBriscole()) {
+           case 0:
+               System.out.println("SONO IN GETWINNER, NEl caso 0, il vincitore è:"+getBestNotBriscolaPlayer().getUsername());
+               return getBestNotBriscolaPlayer();
+           case 1:
+               System.out.println("SONO IN GETWINNER, NEl caso 1, il vincitore è:"+getBriscolaPlayer().getUsername());
+               return getBriscolaPlayer();
+           case 2:
+               System.out.println("SONO IN GETWINNER, NEl caso 2, il vincitore è:"+getBestBriscolaPlayer().getUsername());
+               return getBestBriscolaPlayer();
+           case 3:
+               System.out.println("SONO IN GETWINNER, NEl caso 3, il vincitore è:"+getBestCardPlayer(getTurnCards()).getUsername());
+               return getBestCardPlayer(getTurnCards());
+           default:
+               System.out.println("ERROR");
+               return null;
+       }
     }
 
    //the method reorderPlayersTurn returns an ordered list with the new order
