@@ -135,7 +135,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
             deleteDeck();
     }
 
-
     private void deleteDeck() {
         Platform.runLater(() ->{
             gameGui.getDeckLabel().setText(" ");
@@ -149,7 +148,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
             list.add((Integer) entry.getKey());
 
         }
-        System.out.println("MAPPA:"+hand.values());
         if (list.get(0)+list.get(1)==1) {
             return 2;
         }

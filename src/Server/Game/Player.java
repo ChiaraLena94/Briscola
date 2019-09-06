@@ -24,7 +24,7 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         this.clientPlayer = clientInterface;
         this.points = 0;
         this.game = game;
-        this.team="noTeam";
+        this.team=" ";
     }
 
     //getter methods

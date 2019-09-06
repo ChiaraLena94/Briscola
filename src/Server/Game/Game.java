@@ -216,15 +216,15 @@ public abstract class  Game {
 
     public void endTurn() throws RemoteException {
         setNumBriscole();
-        if (getNumPlayers()==4) {
-            if (getWinner()==getPlayersTurn().get(0) || getWinner()==getPlayersTurn().get(2)){
-                getPlayersTurn().get(0).addPoints(getTurnPoints());
-                getPlayersTurn().get(2).addPoints(getTurnPoints());
+        if (numPlayers==4) {
+            for (int i=0; i<playersTurn.size(); i++){
+                if (playersTurn.get(i).getTeam().equals(getWinner().getTeam())) {
+                    playersTurn.get(i).addPoints(getTurnPoints());
+                    System.out.println("ho aggiunto al giocatore "+playersTurn.get(i).getUsername()+"   "+getTurnPoints()+"punti!!!!!!!");
+
                 }
-            else {
-                getPlayersTurn().get(1).addPoints(getTurnPoints());
-                getPlayersTurn().get(3).addPoints(getTurnPoints());
             }
+
         }
         else getWinner().addPoints(getTurnPoints());
         updateTurnWinner(getWinner().getUsername());

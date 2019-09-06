@@ -3,6 +3,7 @@ package Client.Gui;
 import Client.Client;
 import Client.Gui.animations.TranslateAnimation;
 import Core.Card;
+import Server.Game.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class GameGui {
     private Scene scene;
     private Stage stage;
+
     private ImageView myLeft =new ImageView();
     private ImageView myCenter =new ImageView();
     private ImageView myRight =new ImageView();
@@ -212,9 +214,8 @@ public class GameGui {
 
     public void addCardToBoard(String lastPlayer, int idCard) throws RemoteException {
         insertCard(lastPlayer,cardPathLoader.getPath(idCard));
-        System.out.println("\n\n\n"+ lastPlayer+ "CIAONE");
-        int last = advMap.get(lastPlayer);
-        System.out.println("\n\n Sono il giocatore"+ Client.getInstance().getUsername()+" E VEDO che ha giocato il giocatore"+ last+"\n\n");
+        int last=advMap.get(lastPlayer);
+        System.out.println("sono in gameGui e stampo last: "+last);
         switch (last){
             case 1:
                 if (adv1Right.getImage()==null) {
@@ -317,9 +318,17 @@ public class GameGui {
 
     private void updateLabelPoints (String winner) throws RemoteException {
         for (Map.Entry<String, Integer> entry : Client.getInstance().getMapPoints().entrySet()) {
+           if (Client.getInstance().getPlayerList().size()==4) {
+                for (int i=0; i<playerList.size(); i++) {
+                    if (winner.equals(entry.getKey()) && winner.equals(playerList.get(i))){
+                        if (Client.getInstance().getUsername().equals(playerList.get(i+2)) || (i>2 && Client.getInstance().getUsername().equals(playerList.get((i-2))))) {
+                            myPoints.setText(entry.getValue().toString());
+                        }
+                    }
+                }
+            }
             if (winner.equals(entry.getKey()) && winner.equals(Client.getInstance().getUsername())){
                 myPoints.setText(entry.getValue().toString());
-                System.out.println("i punti sono: "+(entry.getValue().toString()));
             }
         }
 
