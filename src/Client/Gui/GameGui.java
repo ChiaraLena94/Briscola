@@ -49,6 +49,9 @@ public class GameGui {
     private Label nameAdv1 = new Label();
     private Label nameAdv3 = new Label();
     private Label nameAdv4 = new Label();
+    private Label teamAdv1 = new Label();
+    private Label teamAdv3 = new Label();
+    private Label teamAdv4 = new Label();
     private Label controlLabel = new Label();
     private ImageView deckAdv1 =new ImageView();
     private ImageView deckAdv3 =new ImageView();
@@ -205,6 +208,9 @@ public class GameGui {
         deck= (ImageView) scene.lookup("#deck");
         briscola= (ImageView) scene.lookup("#briscola");
         deckLabel= (Label) scene.lookup("#deckLabel");
+        teamAdv1= (Label) scene.lookup("#teamAdv1");
+        teamAdv3= (Label) scene.lookup("#teamAdv3");
+        teamAdv4= (Label) scene.lookup("#teamAdv4");
     }
 
     public Parent createContent() throws IOException {
@@ -215,7 +221,6 @@ public class GameGui {
     public void addCardToBoard(String lastPlayer, int idCard) throws RemoteException {
         insertCard(lastPlayer,cardPathLoader.getPath(idCard));
         int last=advMap.get(lastPlayer);
-        System.out.println("sono in gameGui e stampo last: "+last);
         switch (last){
             case 1:
                 if (adv1Right.getImage()==null) {

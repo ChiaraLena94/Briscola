@@ -28,9 +28,6 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     }
 
     //getter methods
-    public String getTeam() {
-        return team;
-    }
 
     public void setTeam(String team) {
         this.team = team;
@@ -101,6 +98,16 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         HashMap<String, Integer> mapPoints= new HashMap<>();
         game.getPlayers().forEach((k,v) -> mapPoints.put(v.getUsername(), v.getPoints()));
         return mapPoints;
+    }
+
+    @Override
+    public String getTeam() {
+        return team;
+    }
+
+    @Override
+    public Map<String,String> getplayersTeam(){
+        return game.getPlayersTeam();
     }
 
 }

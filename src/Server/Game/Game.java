@@ -17,6 +17,7 @@ public abstract class  Game {
     private Seed briscola;
     private Deck deck;
     private Map<Player, Card> turnCards;
+    private Map<String,String> playersTeam;
     private List<Player> playersTurn;
     private int pointsInTurn;
     private EnumHandler enumHandler;
@@ -67,6 +68,10 @@ public abstract class  Game {
         return deck;
     }
 
+    public Map<String, String> getPlayersTeam() {
+        return playersTeam;
+    }
+
     //Game constructor
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
@@ -97,12 +102,17 @@ public abstract class  Game {
     protected void startGame() {
         turnCards = new HashMap<>();
         playersTurn = new ArrayList<>();
+        playersTeam = new HashMap<>();
         getPlayers().forEach((k,v) -> playersTurn.add(v));
         if (playersTurn.size()==4) {
             playersTurn.get(0).setTeam("team1");
             playersTurn.get(2).setTeam("team1");
             playersTurn.get(1).setTeam("team2");
             playersTurn.get(3).setTeam("team2");
+            for (int i=0; i<4; i++) {
+                playersTeam.put(playersTurn.get(i).getUsername(), playersTurn.get(i).getTeam());
+            }
+
         }
         sendDeckToPlayer();
         try {

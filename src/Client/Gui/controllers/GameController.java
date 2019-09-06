@@ -98,6 +98,18 @@ public class GameController implements Initializable {
     @FXML
     public Label deckLabel;
 
+    @FXML
+    public Label myTeam;
+
+    @FXML
+    public Label teamAdv1;
+
+    @FXML
+    public Label teamAdv3;
+
+    @FXML
+    public Label teamAdv4;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         hand= Client.getInstance().getHand();
@@ -108,6 +120,7 @@ public class GameController implements Initializable {
         deck.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         myName.setText(Client.getInstance().getUsername());
         myPoints.setText("0");
+        //myTeam.setText("            ");
         try {
             setNumOfCardsInDeck();
         } catch (RemoteException e) {
@@ -121,11 +134,19 @@ public class GameController implements Initializable {
         }
 
         if (playerList.size()==4) {
+            try {
                 initialize4AdvBoard(playerList);
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
+        }
         else {
             playerList.remove(Client.getInstance().getUsername());
-            initializeAdv1(playerList.get(0));
+            try {
+                initializeAdv1(playerList.get(0));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             initializeOtherAdv();
         }
         addFirstListener();
@@ -136,7 +157,12 @@ public class GameController implements Initializable {
         }
     }
 
-    private void initialize4AdvBoard(List<String> playerList ) {
+    private void initialize4AdvBoard(List<String> playerList ) throws RemoteException {
+        try {
+            myTeam.setText(Client.getInstance().getPlayerInterface().getTeam());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         playerList.add(playerList.get(0));
         playerList.add(playerList.get(1));
         playerList.add(playerList.get(2));
@@ -199,22 +225,37 @@ public class GameController implements Initializable {
         else myRight.setImage(null);
     }
 
-    private void initializeAdv1(String p) {
+    private void initializeAdv1(String p) throws RemoteException {
         nameAdv1.setText(p);
+        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
+            if (entry.getKey().equals(p)) {
+                teamAdv1.setText(entry.getValue());
+            }
+        }
         adv1Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv1Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv1Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
     }
 
-    private void initializeAdv3(String p) {
+    private void initializeAdv3(String p) throws RemoteException {
         nameAdv3.setText(p);
+        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
+            if (entry.getKey().equals(p)) {
+                teamAdv3.setText(entry.getValue());
+            }
+        }
         adv3Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv3Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv3Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
     }
 
-    private void initializeAdv4(String p) {
+    private void initializeAdv4(String p) throws RemoteException {
         nameAdv4.setText(p);
+        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
+            if (entry.getKey().equals(p)) {
+                teamAdv4.setText(entry.getValue());
+            }
+        }
         adv4Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv4Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         adv4Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));

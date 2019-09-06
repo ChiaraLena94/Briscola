@@ -1,8 +1,6 @@
 package api;
 
 import Core.Card;
-import Core.Seed;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -21,5 +19,9 @@ public interface PlayerInterface extends Remote {
     public List<String> getPlayerList() throws RemoteException;
 
     public Map<String, Integer> getMapPoints() throws RemoteException;
+
+    public Map<String,String> getplayersTeam() throws RemoteException;
+
+    public String getTeam() throws RemoteException;
 
 }

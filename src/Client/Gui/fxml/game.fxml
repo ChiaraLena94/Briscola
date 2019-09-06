@@ -26,7 +26,27 @@
       </ImageView>
       <ImageView fx:id="adv1Right" fitHeight="100.0" layoutX="475.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" rotate="20.0">
       </ImageView>
-      <Label fx:id="deckLabel" layoutX="250" layoutY="250" textFill="WHITE">
+      <Label fx:id="deckLabel" layoutX="230" layoutY="245" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="teamAdv1" layoutX="250" layoutY="65" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="teamAdv3" layoutX="878" layoutY="210" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="teamAdv4" layoutX="29" layoutY="210" textFill="WHITE">
+         <font>
+            <Font name="Rockwell" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="myTeam" layoutX="220" layoutY="550" textFill="WHITE">
          <font>
             <Font name="Rockwell" size="20.0" />
          </font>
@@ -62,24 +82,24 @@
             <Font name="Rockwell" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="nameAdv1" layoutX="268.0" layoutY="34.0" textFill="WHITE">
+      <Label fx:id="nameAdv1" layoutX="250.0" layoutY="35.0" textFill="WHITE">
          <font>
-            <Font name="Rockwell" size="18.0" />
+            <Font name="Rockwell" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="nameAdv4" layoutX="29.0" layoutY="204.0" textFill="WHITE">
+      <Label fx:id="nameAdv4" layoutX="29.0" layoutY="180.0" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font name="Rockwell" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="nameAdv3" layoutX="878.0" layoutY="209.0" textFill="WHITE">
+      <Label fx:id="nameAdv3" layoutX="890.0" layoutY="180.0" textFill="WHITE">
          <font>
-            <Font name="Rockwell" size="18.0" />
+            <Font name="Rockwell" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="myName" layoutX="230.0" layoutY="531.0" textFill="WHITE">
+      <Label fx:id="myName" layoutX="220.0" layoutY="520.0" textFill="WHITE">
          <font>
-            <Font name="Rockwell" size="18.0" />
+            <Font name="Rockwell" size="20.0" />
          </font>
       </Label>
       <Label fx:id="myPoints" layoutX="268.0" layoutY="602.0" textFill="WHITE">
