@@ -4,7 +4,6 @@ import Client.Client;
 import Client.Gui.animations.ScaleAnimation;
 import Client.Gui.animations.TranslateAnimation;
 import Core.Card;
-import Server.Game.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -102,14 +100,6 @@ public class GameGui {
 
     public Label getDeckLabel() {
         return deckLabel;
-    }
-
-    public ScaleAnimation getScaleUp() {
-        return scaleUp;
-    }
-
-    public ScaleAnimation getScaleDown() {
-        return scaleDown;
     }
 
     //GameGui constructor
@@ -494,7 +484,7 @@ public class GameGui {
 
     private void changeControl(){
         controlLabel.setText("ASPETTA IL TUO TURNO");
-        scaleUp = new ScaleAnimation(controlLabel, 1.5, 1.5, Duration.millis(1000.0));
+        scaleUp = new ScaleAnimation(controlLabel, 1.3, 1.3, Duration.millis(1000.0));
         scaleDown = new ScaleAnimation(controlLabel, 1, 1, Duration.millis(1000.0));
         scaleUp.playAnimation();
         scaleUp.getScaleTransition().setOnFinished(event -> {

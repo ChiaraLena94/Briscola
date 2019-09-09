@@ -33,7 +33,6 @@ public abstract class  Game {
 
     public void setNumBriscole() {
         numBriscole=setNumberOfBriscoleInThisTurn();
-        System.out.println("ho settato il numero di briscole che è: "+getNumBriscole());
     }
 
     public Map<Player, Card> getTurnCards() {
@@ -146,7 +145,6 @@ public abstract class  Game {
                 return entry.getKey();
             }
         }
-        System.out.println("non dovrei essere qui");
         return null;
     }
 
@@ -160,11 +158,9 @@ public abstract class  Game {
 
     public int setNumberOfBriscoleInThisTurn() {
         getTurnCards().forEach((player,card) -> {
-            System.out.println("sono in setnumbriscole, stampo la carta: "+card.getId()+card.getSeed()+card.getNum());
             if(card.getSeed()==getBriscola())
                 num++;
         });
-        System.out.println("sono in setnumberofbriscoleinthisturn. le briscole sono: "+num);
         return num;
     }
 
@@ -230,8 +226,6 @@ public abstract class  Game {
             for (int i=0; i<playersTurn.size(); i++){
                 if (playersTurn.get(i).getTeam().equals(getWinner().getTeam())) {
                     playersTurn.get(i).addPoints(getTurnPoints());
-                    System.out.println("ho aggiunto al giocatore "+playersTurn.get(i).getUsername()+"   "+getTurnPoints()+"punti!!!!!!!");
-
                 }
             }
 
@@ -258,7 +252,6 @@ public abstract class  Game {
     private void deckEmpty(){
         numBriscole=0;
         num=0;
-        System.out.println("sono in game deckEmpty e il numero di turni finali giocati è: "+numOfFinalTurnsPlayed);
         if(numOfFinalTurnsPlayed==2) finishGame();
         else {
             numOfFinalTurnsPlayed++;
@@ -342,7 +335,6 @@ public abstract class  Game {
     }
 
     private Player nextPlayer(Player p) {
-        System.out.println("sono in game dentro next player, le carte in turno sono: "+getTurnCards().size());
         if(getTurnCards().size() == getNumPlayers())
             return null;
         else return getPlayersTurn().get(getTurnCards().size());

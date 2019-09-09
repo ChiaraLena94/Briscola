@@ -1,7 +1,6 @@
 package Server.Game;
 
 import Core.Card;
-import Core.Seed;
 import api.ClientInterface;
 import api.PlayerInterface;
 
@@ -28,7 +27,6 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
     }
 
     //getter methods
-
     public void setTeam(String team) {
         this.team = team;
     }

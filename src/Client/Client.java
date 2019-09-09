@@ -121,7 +121,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     public void selectCard() throws RemoteException {
         Platform.runLater(() ->{
             gameGui.getControlLabel().setText("TOCCA A TE!");
-            scaleUp = new ScaleAnimation(gameGui.getControlLabel(), 1.5, 1.5, Duration.millis(1000.0));
+            scaleUp = new ScaleAnimation(gameGui.getControlLabel(), 1.3, 1.3, Duration.millis(1000.0));
             scaleDown = new ScaleAnimation(gameGui.getControlLabel(), 1, 1, Duration.millis(1000.0));
             scaleUp.playAnimation();
             scaleUp.getScaleTransition().setOnFinished(event -> {
