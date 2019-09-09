@@ -36,7 +36,7 @@
             <Font name="Rockwell" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="teamAdv3" layoutX="878" layoutY="210" textFill="WHITE">
+      <Label fx:id="teamAdv3" layoutX="890" layoutY="210" textFill="WHITE">
          <font>
             <Font name="Rockwell" size="20.0" />
          </font>
@@ -46,7 +46,7 @@
             <Font name="Rockwell" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="myTeam" layoutX="220" layoutY="550" textFill="WHITE">
+      <Label fx:id="myTeam" layoutX="250" layoutY="550" textFill="WHITE">
          <font>
             <Font name="Rockwell" size="20.0" />
          </font>

@@ -326,7 +326,12 @@ public class GameGui {
            if (Client.getInstance().getPlayerList().size()==4) {
                 for (int i=0; i<playerList.size(); i++) {
                     if (winner.equals(entry.getKey()) && winner.equals(playerList.get(i))){
-                        if (Client.getInstance().getUsername().equals(playerList.get(i+2)) || (i>2 && Client.getInstance().getUsername().equals(playerList.get((i-2))))) {
+                        if (i>2) {
+                            if (( Client.getInstance().getUsername().equals(playerList.get((i-2))))) {
+                                myPoints.setText(entry.getValue().toString());
+                            }
+                        }
+                        else if (Client.getInstance().getUsername().equals(playerList.get(i+2))) {
                             myPoints.setText(entry.getValue().toString());
                         }
                     }
