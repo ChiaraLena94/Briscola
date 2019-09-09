@@ -93,7 +93,6 @@ public class LauncherController implements Initializable {
         rotateStick.playAnimation();
     }
 
-
     public void play (ActionEvent actionEvent) throws IOException {
         loginGui.createLoginGui();
     }

@@ -120,7 +120,6 @@ public class GameController implements Initializable {
         deck.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
         myName.setText(Client.getInstance().getUsername());
         myPoints.setText("0");
-        //myTeam.setText("            ");
         try {
             setNumOfCardsInDeck();
         } catch (RemoteException e) {

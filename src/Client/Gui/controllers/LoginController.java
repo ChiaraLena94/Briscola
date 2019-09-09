@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -58,6 +59,8 @@ public class LoginController implements Initializable {
                 waitStage = new Stage();
                 waitStage.setScene(new Scene(root, 800, 600));
                 waitStage.centerOnScreen();
+                waitStage.getIcons().add(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+                waitStage.setResizable(false);
                 clientBriscola.setBufferStage(waitStage);
                 MainGui.getPrimaryStage().hide();
                 waitStage.show();
@@ -85,7 +88,6 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-
     public void submitChoice (ActionEvent actionEvent) {
         group = new ToggleGroup();
         choice2.setToggleGroup(group);
@@ -94,13 +96,10 @@ public class LoginController implements Initializable {
 
         if (choice2.isSelected()) {
             numPlayers = 2;
-            System.out.println("hai selezionato " + group.getSelectedToggle());
         } else if (choice3.isSelected()) {
             numPlayers = 3;
-            System.out.println("hai selezionato " + group.getSelectedToggle());
         } else if (choice4.isSelected()) {
             numPlayers = 4;
-            System.out.println("hai selezionato " + group.getSelectedToggle());
         }
     }
 }

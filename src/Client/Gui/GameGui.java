@@ -1,6 +1,7 @@
 package Client.Gui;
 
 import Client.Client;
+import Client.Gui.animations.ScaleAnimation;
 import Client.Gui.animations.TranslateAnimation;
 import Core.Card;
 import Server.Game.Player;
@@ -67,6 +68,8 @@ public class GameGui {
     private Parent root;
     private List<String> playerList = new ArrayList<>();
     private Map<String, Integer> advMap = new HashMap();
+    private ScaleAnimation scaleUp;
+    private ScaleAnimation scaleDown;
 
     //getter methods
     public Stage getStage() {
@@ -101,6 +104,14 @@ public class GameGui {
         return deckLabel;
     }
 
+    public ScaleAnimation getScaleUp() {
+        return scaleUp;
+    }
+
+    public ScaleAnimation getScaleDown() {
+        return scaleDown;
+    }
+
     //GameGui constructor
     public GameGui() throws IOException {
         Parent window = createContent();
@@ -130,7 +141,6 @@ public class GameGui {
                     }
                     else initialize4AdvMap(playerList);
                 }catch (IndexOutOfBoundsException n){
-                    System.out.println("\n\nStampo Grandezza ADV MAP"+ advMap.size());
                 }
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -301,7 +311,7 @@ public class GameGui {
         Platform.runLater(() ->{
             cardAnimation1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
             if(winner.equals(Client.getInstance().getUsername())) {
-                new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.millis(5000)).playAnimation();
+                new TranslateAnimation(cardAnimation1, myDeck.getX(), myDeck.getY(), Duration.millis(1000)).playAnimation();
                 myDeck.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
             }
             else {
@@ -346,11 +356,9 @@ public class GameGui {
         cardAnimation3.setY(cardPlayer1.getY());
         cardAnimation4.setX(cardPlayer1.getX());
         cardAnimation4.setY(cardPlayer1.getY());
-
     }
 
     private void createAdvDeck(String winner){
-        System.out.println("la carta si sposta verso il vincitore");
         if (winner.equals(nameAdv1.getText())){
             new TranslateAnimation(cardAnimation1, deckAdv1.getX(), deckAdv1.getY(), Duration.seconds(1.5)).playAnimation();
             deckAdv1.setImage(new Image(getClass().getResourceAsStream("../Gui/Resources/retroCarta.png")));
@@ -398,7 +406,6 @@ public class GameGui {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-            System.out.println("ho aggiornato le carte, ora inizia un nuovo turno");
         });
 
     }
@@ -486,22 +493,24 @@ public class GameGui {
     }
 
     private void changeControl(){
-        controlLabel.setText("non tocca a te");
+        controlLabel.setText("ASPETTA IL TUO TURNO");
+        scaleUp = new ScaleAnimation(controlLabel, 1.5, 1.5, Duration.millis(1000.0));
+        scaleDown = new ScaleAnimation(controlLabel, 1, 1, Duration.millis(1000.0));
+        scaleUp.playAnimation();
+        scaleUp.getScaleTransition().setOnFinished(event -> {
+            scaleDown.playAnimation();
+        });
         removeCardListener();
-
     }
 
     private void removeCardListener() {
         myLeft.setOnMouseClicked(mouseEvent -> {
-            //labelTurn.setText("aspetta il  tuo turno");
         });
 
         myCenter.setOnMouseClicked(mouseEvent -> {
-            //labelTurn.setText("aspetta il  tuo turno");
         });
 
         myRight.setOnMouseClicked(mouseEvent -> {
-            //labelTurn.setText("aspetta il  tuo turno");
         });
     }
 
@@ -513,14 +522,6 @@ public class GameGui {
             e.printStackTrace();
         }
         deleteCorrectCard(idCard);
-    }
-
-    private void checkLast() {
-        if (Client.getInstance().getHand().size() == 1){
-            System.out.println("\n\n SONO RIMASTO CON UNA CARTA");
-            System.out.println(Client.getInstance().getHand().values());
-        }else
-            System.out.println("HO PIU DI UNA CARTA");
     }
 
     private void deleteCorrectCard(int idCard) {

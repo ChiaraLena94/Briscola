@@ -3,6 +3,7 @@ package Client;
 import Client.Gui.GameGui;
 import Client.Gui.LoginGui;
 import Client.Gui.MainGui;
+import Client.Gui.animations.ScaleAnimation;
 import Core.Card;
 import Core.Deck;
 import Server.Game.Player;
@@ -15,6 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -39,6 +42,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     private Stage gameStage=null;
     private static Client instance;
     private GameGui gameGui;
+    private ScaleAnimation scaleUp, scaleDown;
 
     protected Client(String username) throws RemoteException {
         this.username = username;
@@ -80,7 +84,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         try {
             playerInterface = server.login(username, numPlayers, this);
             logged = true;
-            System.out.println("Ottengo Player Briscola");
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -117,7 +120,13 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void selectCard() throws RemoteException {
         Platform.runLater(() ->{
-            gameGui.getControlLabel().setText("è il tuo turno!");
+            gameGui.getControlLabel().setText("TOCCA A TE!");
+            scaleUp = new ScaleAnimation(gameGui.getControlLabel(), 1.5, 1.5, Duration.millis(1000.0));
+            scaleDown = new ScaleAnimation(gameGui.getControlLabel(), 1, 1, Duration.millis(1000.0));
+            scaleUp.playAnimation();
+            scaleUp.getScaleTransition().setOnFinished(event -> {
+                scaleDown.playAnimation();
+            });
             gameGui.addListenerToCards();
         });
     }
@@ -163,8 +172,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void notifyEndGame(String winner) throws RemoteException {
-        System.out.println("\n\n\n sono in notifyendgame. Sono il player "+username);
-        System.out.println("la partita è finita e il vincitore è "+winner);
         Platform.runLater(() ->{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("End Game");
