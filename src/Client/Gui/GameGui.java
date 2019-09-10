@@ -121,7 +121,6 @@ public class GameGui {
     private void initializeAdvMap() {
         try {
             playerList = Client.getInstance().getPlayerList();
-
                 try{
                     if (Client.getInstance().getPlayerList().size()!=4) {
                         playerList.remove(Client.getInstance().getUsername());
@@ -150,21 +149,21 @@ public class GameGui {
         }
         switch(pos) {
             case 0:
-                advMap.put(playerList.get(0),3);
-                advMap.put(playerList.get(1),1);
-                advMap.put(playerList.get(2),4);
+                advMap.put(playerList.get(1),3);
+                advMap.put(playerList.get(2),1);
+                advMap.put(playerList.get(3),4);
                 break;
 
             case 1:
                 advMap.put(playerList.get(0),4);
-                advMap.put(playerList.get(1),3);
-                advMap.put(playerList.get(2),1);
+                advMap.put(playerList.get(2),3);
+                advMap.put(playerList.get(3),1);
                 break;
 
             case 2:
                 advMap.put(playerList.get(0),1);
                 advMap.put(playerList.get(1),4);
-                advMap.put(playerList.get(2),3);
+                advMap.put(playerList.get(3),3);
                 break;
 
             case 3:
@@ -219,8 +218,10 @@ public class GameGui {
     }
 
     public void addCardToBoard(String lastPlayer, int idCard) throws RemoteException {
+        int last=0;
         insertCard(lastPlayer,cardPathLoader.getPath(idCard));
-        int last=advMap.get(lastPlayer);
+        last=advMap.get(lastPlayer);
+
         switch (last){
             case 1:
                 if (adv1Right.getImage()==null) {
@@ -247,6 +248,9 @@ public class GameGui {
                     else adv4Center.setImage(null);
                 }
                 else adv4Right.setImage(null);
+                break;
+            default:
+                System.out.println("non dovrei essere qui!");
                 break;
         }
     }
@@ -510,7 +514,14 @@ public class GameGui {
     }
 
     private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
-        insertCard(Client.getInstance().getUsername(), cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
+        System.out.println("Stampo l'id della carta prima del try: "+idCard);
+        try{
+            insertCard(Client.getInstance().getUsername(), cardPathLoader.getPath(Client.getInstance().getHand().get(idCard).getId()));
+        }catch(NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("stampo id card: "+idCard);
+            System.out.println("stampo l'id della carta:   "+Client.getInstance().getHand().get(idCard).getId()+" fine stampa id");
+        }
         try{
             Client.getInstance().playCard(Client.getInstance().getHand().get(idCard),idCard);
         }catch(RemoteException |NullPointerException e) {

@@ -279,13 +279,27 @@ public abstract class  Game {
     }
 
     public void endGame(String winner) {
+        Map<String, Integer> finalMap= new HashMap<>();
+        if (numPlayers==4) {
+            for (Map.Entry<Integer, Player> entry : players.entrySet()) {
+                finalMap.put(entry.getValue().getTeam(), entry.getValue().getPoints());
+                System.out.println(" TEAM:"+entry.getValue().getTeam()+"PUNTI:"+ entry.getValue().getPoints());
+            }
+        }
+        else {
+            for (Map.Entry<Integer, Player> entry : players.entrySet()) {
+                finalMap.put(entry.getValue().getUsername(), entry.getValue().getPoints());
+                System.out.println("GIOCATORE:"+entry.getValue().getTeam()+"PUNTI:"+ entry.getValue().getPoints());
+            }
+        }
         for (int i=0; i<getPlayersTurn().size(); i++) {
             try {
-                getPlayersTurn().get(i).getClientPlayer().notifyEndGame(winner);
+                getPlayersTurn().get(i).getClientPlayer().notifyEndGame(winner, finalMap);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
+
 
     }
 

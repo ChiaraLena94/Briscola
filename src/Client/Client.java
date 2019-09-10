@@ -6,14 +6,10 @@ import Client.Gui.MainGui;
 import Client.Gui.animations.ScaleAnimation;
 import Core.Card;
 import Core.Deck;
-import Server.Game.Player;
 import api.ClientInterface;
 import api.PlayerInterface;
 import api.ServerInterface;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -119,10 +115,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void selectCard() throws RemoteException {
-       System.out.println("le carte che ho in mano sono:");
-       for (int i=0; i<hand.size(); i++) {
-           System.out.println(hand.get(i).getNum()+"   "+hand.get(i).getSeed());
-       }
         Platform.runLater(() ->{
             gameGui.getControlLabel().setText("TOCCA A TE!");
             scaleUp = new ScaleAnimation(gameGui.getControlLabel(), 1.3, 1.3, Duration.millis(1000.0));
@@ -175,18 +167,18 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     }
 
     @Override
-    public void notifyEndGame(String winner) throws RemoteException {
+    public void notifyEndGame(String winner, Map<String, Integer> finalMap) throws RemoteException {
         Platform.runLater(() ->{
+            String finalText="";
+            for (Map.Entry<String, Integer> entry : finalMap.entrySet()) {
+                finalText += "\n"+entry.getKey()+ " Punti: "+ entry.getValue();
+            }
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("End Game");
-            alert.setHeaderText("This game is finished!");
-            alert.setContentText("The winner is: "+winner);
+            alert.setTitle("Fine Gioco");
+            alert.setHeaderText("Il gioco è finito!");
+            alert.setContentText(finalText);
             alert.showAndWait();});
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         Platform.runLater(() ->{
             gameGui.getStage().close();

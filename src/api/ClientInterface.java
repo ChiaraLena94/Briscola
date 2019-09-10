@@ -1,11 +1,11 @@
 package api;
 
 import Core.Card;
-import Server.Game.Player;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 public interface ClientInterface extends Remote {
 
@@ -15,7 +15,7 @@ public interface ClientInterface extends Remote {
 
     public void drawCard() throws RemoteException;
 
-    public void notifyEndGame(String winner) throws RemoteException;
+    public void notifyEndGame(String winner, Map<String, Integer> finalMap) throws RemoteException;
 
     public void updateWithPlayedCard(String lastPlayer, int idTurnCard) throws RemoteException;
 

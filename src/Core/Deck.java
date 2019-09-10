@@ -13,7 +13,7 @@ public class Deck {
     public Deck(Boolean normalDeck){
         initializeDeck();
         if(!normalDeck)
-            deck.remove(2);
+            deck.remove(1);
         shuffleDeck();
         try {
             briscolaCard=deck.get(39);
