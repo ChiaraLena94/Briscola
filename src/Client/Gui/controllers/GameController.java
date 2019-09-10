@@ -21,7 +21,7 @@ public class GameController implements Initializable {
     CardPathLoader cardPathLoader = new CardPathLoader();
     GameGui gameGui=null;
     List<String> playerList= new ArrayList<>();
-
+    ScaleAnimation scaleUp, scaleDown;
 
     @FXML
     public ImageView cardPlayer1;
@@ -185,30 +185,64 @@ public class GameController implements Initializable {
             deckLabel.setText("34");
     }
 
-    private void addFirstListener(){
-        myLeft.setOnMouseClicked(mouseEvent -> {
-            try {
-                chooseCard(mouseEvent,0);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
+    private void addFirstListener() {
+        System.out.println("sono in game controller e sono entrato in add first listener");
+        try {
+            System.out.println("stampo il primo giocatore: "+Client.getInstance().getPlayerList().get(0)+ "e io sono il giocatore"+Client.getInstance().getUsername());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
-        myCenter.setOnMouseClicked(mouseEvent -> {
-            try {
-                chooseCard(mouseEvent,1);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            if (Client.getInstance().getUsername().equals(Client.getInstance().getPlayerList().get(0))) {
+                controlLabel.setText("TOCCA A TE!");
+                scaleUp = new ScaleAnimation(controlLabel, 1.3, 1.3, Duration.millis(1000.0));
+                scaleDown = new ScaleAnimation(controlLabel, 1, 1, Duration.millis(1000.0));
+                scaleUp.playAnimation();
+                scaleUp.getScaleTransition().setOnFinished(event -> {
+                    scaleDown.playAnimation();
+                });
 
-        myRight.setOnMouseClicked(mouseEvent -> {
-            try {
-                chooseCard(mouseEvent,2);
-            } catch (RemoteException e) {
-                e.printStackTrace();
+                myLeft.setOnMouseClicked(mouseEvent -> {
+                    try {
+                        chooseCard(mouseEvent,0);
+                        controlLabel.setText("ASPETTA IL TUO TURNO!");
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                myCenter.setOnMouseClicked(mouseEvent -> {
+                    try {
+                        chooseCard(mouseEvent,1);
+                        controlLabel.setText("ASPETTA IL TUO TURNO!");
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                myRight.setOnMouseClicked(mouseEvent -> {
+                    try {
+                        chooseCard(mouseEvent,2);
+                        controlLabel.setText("ASPETTA IL TUO TURNO!");
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                });
+
             }
-        });
+            else {
+                controlLabel.setText("ASPETTA IL TUO TURNO!");
+                scaleUp = new ScaleAnimation(controlLabel, 1.3, 1.3, Duration.millis(1000.0));
+                scaleDown = new ScaleAnimation(controlLabel, 1, 1, Duration.millis(1000.0));
+                scaleUp.playAnimation();
+                scaleUp.getScaleTransition().setOnFinished(event -> {
+                    scaleDown.playAnimation();
+                });
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private void chooseCard (MouseEvent mouseEvent, int idCard) throws RemoteException {
