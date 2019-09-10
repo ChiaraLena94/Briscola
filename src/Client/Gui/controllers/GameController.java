@@ -139,20 +139,48 @@ public class GameController implements Initializable {
                 e.printStackTrace();
             }
         }
-        else {
+        else if (playerList.size()==2){
             playerList.remove(Client.getInstance().getUsername());
             try {
                 initializeAdv1(playerList.get(0));
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-            initializeOtherAdv();
+        }
+        else if (playerList.size()==3) {
+            try {
+                initializeAdv1(getRightAdvNameForThreePlayers(1));
+                initializeAdv3(getRightAdvNameForThreePlayers(3));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
         addFirstListener();
         try {
             briscola.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(Client.getInstance().getPlayerInterface().getBriscolaCard().getId()))));
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    private String getRightAdvNameForThreePlayers(int pos) {
+        playerList.add(playerList.get(0));
+        playerList.add(playerList.get(1));
+        int posPlayer = 10;
+        for(int i=0; i<playerList.size()-2; i++){
+            if (Client.getInstance().getUsername().equals(playerList.get(i))) {
+                posPlayer=i;
+                break;
+            }
+        }
+        switch (pos){
+            case 1:
+                return playerList.get(posPlayer+2);
+            case 3:
+                return playerList.get(posPlayer+1);
+            default:
+                System.out.println("ERRORE INCREDIBILE");
+                return null;
         }
     }
 
