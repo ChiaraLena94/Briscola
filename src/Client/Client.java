@@ -72,6 +72,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     }
 
 
+
     public void enterGame(int numPlayers) throws RemoteException {
         playerInterface = server.enterGame(username, numPlayers, this);
     }
@@ -91,6 +92,56 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteDeck() {
+        Platform.runLater(() ->{
+            gameGui.getDeckLabel().setText(" ");
+            gameGui.getDeck().setImage(null);
+            gameGui.getBriscola().setImage(null);});
+    }
+
+    private int getEmptyIndex() {
+        List<Integer> list= new ArrayList<>();
+        for (Map.Entry entry : hand.entrySet()) {
+            list.add((Integer) entry.getKey());
+
+        }
+        if (list.get(0)+list.get(1)==1) {
+            return 2;
+        }
+        if (list.get(0)+list.get(1)==2) {
+            return 1;
+        }
+        if (list.get(0)+list.get(1)==3) {
+            return 0;
+        }
+        System.out.println("c'è stato un errore nel calcolo!");
+        return 42;
+    }
+
+    public void updateDeckLabel() {
+        Platform.runLater(() ->{
+            try {
+                gameGui.getDeckLabel().setText(String.valueOf(Integer.parseInt(gameGui.getDeckLabel().getText()) -getPlayerList().size()));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    //Viene chiamato dalla grafica client, selezionando una carta
+    public void playCard(Card card, int pos) throws  RemoteException{
+        hand.remove(pos, card);
+        playerInterface.turnCard(card);
+    }
+
+    public List<String> getPlayerList() throws RemoteException {
+        return playerInterface.getPlayerList();
+    }
+
+    public Map<String, Integer> getMapPoints() throws RemoteException {
+        return playerInterface.getMapPoints();
     }
 
 
@@ -140,31 +191,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
             deleteDeck();
     }
 
-    private void deleteDeck() {
-        Platform.runLater(() ->{
-            gameGui.getDeckLabel().setText(" ");
-            gameGui.getDeck().setImage(null);
-            gameGui.getBriscola().setImage(null);});
-    }
-
-    private int getEmptyIndex() {
-        List<Integer> list= new ArrayList<>();
-        for (Map.Entry entry : hand.entrySet()) {
-            list.add((Integer) entry.getKey());
-
-        }
-        if (list.get(0)+list.get(1)==1) {
-            return 2;
-        }
-        if (list.get(0)+list.get(1)==2) {
-            return 1;
-        }
-        if (list.get(0)+list.get(1)==3) {
-            return 0;
-        }
-        System.out.println("c'è stato un errore nel calcolo!!!!!");
-        return 42;
-    }
 
     @Override
     public void notifyEndGame(String winner, Map<String, Integer> finalMap) throws RemoteException {
@@ -219,21 +245,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         );
     }
 
-    public void updateDeckLabel() {
-        Platform.runLater(() ->{
-            try {
-                gameGui.getDeckLabel().setText(String.valueOf(Integer.parseInt(gameGui.getDeckLabel().getText()) -getPlayerList().size()));
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    //Viene chiamato dalla grafica client, selezionando una carta
-    public void playCard(Card card, int pos) throws  RemoteException{
-        hand.remove(pos, card);
-        playerInterface.turnCard(card);
-    }
 
     //Instance methods. they create the instance client
     public static Client getInstance(){
@@ -245,11 +256,4 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         return instance;
     }
 
-    public List<String> getPlayerList() throws RemoteException {
-        return playerInterface.getPlayerList();
-    }
-
-    public Map<String, Integer> getMapPoints() throws RemoteException {
-        return playerInterface.getMapPoints();
-    }
 }

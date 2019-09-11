@@ -17,9 +17,9 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    int numPlayers =0;
-    Client clientBriscola;
-    Stage waitStage;
+    private int numPlayers =0;
+    private Client clientBriscola;
+    private Stage waitStage;
 
     @FXML
     public Button loginButton;

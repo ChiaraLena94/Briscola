@@ -1,7 +1,5 @@
 package api;
 
-import Server.Game.Player;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

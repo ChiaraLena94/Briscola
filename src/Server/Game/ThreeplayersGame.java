@@ -25,7 +25,6 @@ public class ThreeplayersGame extends Game {
                     playersTemp.put(entry.getKey(), entry.getValue());
                 }
             }
-            System.out.println("sono nel ramo else e stampo la mappa temporanea dei giocatori: " +playersTemp.values());
             return getBestCardPlayer(playersTemp);
         }
     }
@@ -63,19 +62,14 @@ public class ThreeplayersGame extends Game {
    protected Player getWinner(){
        switch(getNumBriscole()) {
            case 0:
-               System.out.println("SONO IN GETWINNER, NEl caso 0, il vincitore è:"+getBestNotBriscolaPlayer().getUsername());
                return getBestNotBriscolaPlayer();
            case 1:
-               System.out.println("SONO IN GETWINNER, NEl caso 1, il vincitore è:"+getBriscolaPlayer().getUsername());
                return getBriscolaPlayer();
            case 2:
-               System.out.println("SONO IN GETWINNER, NEl caso 2, il vincitore è:"+getBestBriscolaPlayer().getUsername());
                return getBestBriscolaPlayer();
            case 3:
-               System.out.println("SONO IN GETWINNER, NEl caso 3, il vincitore è:"+getBestCardPlayer(getTurnCards()).getUsername());
                return getBestCardPlayer(getTurnCards());
            default:
-               System.out.println("ERROR");
                return null;
        }
     }

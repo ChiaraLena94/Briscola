@@ -1,12 +1,9 @@
 package Server.Game;
 
-import Client.Client;
 import Core.Card;
 import Core.Deck;
 import Core.EnumHandler;
 import Core.Seed;
-import javafx.application.Platform;
-
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -71,6 +68,8 @@ public abstract class  Game {
         return playersTeam;
     }
 
+
+
     //Game constructor
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
@@ -111,7 +110,6 @@ public abstract class  Game {
             for (int i=0; i<4; i++) {
                 playersTeam.put(playersTurn.get(i).getUsername(), playersTurn.get(i).getTeam());
             }
-
         }
         sendDeckToPlayer();
         try {
@@ -162,62 +160,6 @@ public abstract class  Game {
                 num++;
         });
         return num;
-    }
-
-    //the method getMaxScoreCard returns the highest score between all the cards in a map
-    //this map is passed as a parameter to the method
-    public int getMaxScoreCard(Map<Player, Card> map) {
-        int maxScoreCard = 0;
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if ((enumHandler.getScoreMap().get(entry.getValue().getScore()))- maxScoreCard > 0) {
-                maxScoreCard = enumHandler.getScoreMap().get(entry.getValue().getScore());
-            }
-        }
-        return maxScoreCard;
-    }
-
-    //the method getScorePlayerMaxCard returns the number of players in the passed map who have played a card
-    //with a certain score (that is passed to the method)
-    public int getNumPlayerMaxScoreCard (int maxScore, Map<Player, Card> map){
-        numPlayerMaxCard = 0;
-        map.forEach((player,card) -> {
-            if(enumHandler.getScoreMap().get(card.getScore())== maxScore) {
-                numPlayerMaxCard +=1;
-            }
-        });
-        return numPlayerMaxCard;
-    }
-
-    //the method getMaxScorePlayer returns the Player who has played the card with highest score
-    public Player getMaxScorePlayer (int maxScore, Map<Player, Card> map) {
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if(enumHandler.getScoreMap().get(entry.getValue().getScore()) == maxScore) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    //the method getMaxNumCard returns the highest number between all the cards in a map
-    //this map is passed as a parameter to the method
-    public int getMaxNumCard(Map<Player, Card> map) {
-        int  maxNumCard=0;
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if ((enumHandler.getNumberMap().get(entry.getValue().getNum()))- maxNumCard > 0) {
-                maxNumCard = enumHandler.getNumberMap().get(entry.getValue().getNum());
-            }
-        }
-        return maxNumCard;
-    }
-
-    //the method getMaxNumPlayer returns the Player who has played the card with highest number
-    public Player getMaxNumPlayer (int maxNum, Map<Player, Card> map) {
-        for (Map.Entry<Player, Card> entry : map.entrySet()) {
-            if(enumHandler.getNumberMap().get(entry.getValue().getNum()) == maxNum) {
-                return entry.getKey();
-            }
-        }
-        return null;
     }
 
     public void endTurn() throws RemoteException {
@@ -278,43 +220,6 @@ public abstract class  Game {
         }
     }
 
-    public void endGame(String winner) {
-        Map<String, Integer> finalMap= new HashMap<>();
-        if (numPlayers==4) {
-            for (Map.Entry<Integer, Player> entry : players.entrySet()) {
-                finalMap.put(entry.getValue().getTeam(), entry.getValue().getPoints());
-                System.out.println(" TEAM:"+entry.getValue().getTeam()+"PUNTI:"+ entry.getValue().getPoints());
-            }
-        }
-        else {
-            for (Map.Entry<Integer, Player> entry : players.entrySet()) {
-                finalMap.put(entry.getValue().getUsername(), entry.getValue().getPoints());
-                System.out.println("GIOCATORE:"+entry.getValue().getTeam()+"PUNTI:"+ entry.getValue().getPoints());
-            }
-        }
-        for (int i=0; i<getPlayersTurn().size(); i++) {
-            try {
-                getPlayersTurn().get(i).getClientPlayer().notifyEndGame(winner, finalMap);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-    }
-
-    public void finishGame(){
-        try{
-            if (getNumPlayers() == 4)
-               endGame(getGameWinner().getTeam());
-           else
-               endGame(getGameWinner().getUsername());
-        }
-        catch (NullPointerException e){
-            endGame("TIE");
-        }
-    }
-
     public void addCardToTurn(Card turnCard, Player p){
         getTurnCards().put(p, turnCard);
         try {
@@ -357,6 +262,99 @@ public abstract class  Game {
     public void playTurn(Player p) throws RemoteException {
         if (p==null) endTurn();
         else p.yourTurn();
+    }
+
+    public void endGame(String winner) {
+        Map<String, Integer> finalMap= new HashMap<>();
+        if (numPlayers==4) {
+            for (Map.Entry<Integer, Player> entry : players.entrySet()) {
+                finalMap.put(entry.getValue().getTeam(), entry.getValue().getPoints());
+                System.out.println(" TEAM:"+entry.getValue().getTeam()+"PUNTI:"+ entry.getValue().getPoints());
+            }
+        }
+        else {
+            for (Map.Entry<Integer, Player> entry : players.entrySet()) {
+                finalMap.put(entry.getValue().getUsername(), entry.getValue().getPoints());
+                System.out.println("GIOCATORE:"+entry.getValue().getTeam()+"PUNTI:"+ entry.getValue().getPoints());
+            }
+        }
+        for (int i=0; i<getPlayersTurn().size(); i++) {
+            try {
+                getPlayersTurn().get(i).getClientPlayer().notifyEndGame(winner, finalMap);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public void finishGame(){
+        try{
+            if (getNumPlayers() == 4)
+                endGame(getGameWinner().getTeam());
+            else
+                endGame(getGameWinner().getUsername());
+        }
+        catch (NullPointerException e){
+            endGame("TIE");
+        }
+    }
+
+    //the method getMaxScoreCard returns the highest score between all the cards in a map
+    //this map is passed as a parameter to the method
+    public int getMaxScoreCard(Map<Player, Card> map) {
+        int maxScoreCard = 0;
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if ((enumHandler.getScoreMap().get(entry.getValue().getScore()))- maxScoreCard > 0) {
+                maxScoreCard = enumHandler.getScoreMap().get(entry.getValue().getScore());
+            }
+        }
+        return maxScoreCard;
+    }
+
+    //the method getScorePlayerMaxCard returns the number of players in the passed map who have played a card
+    //with a certain score (that is passed to the method)
+    public int getNumPlayerMaxScoreCard (int maxScore, Map<Player, Card> map){
+        numPlayerMaxCard = 0;
+        map.forEach((player,card) -> {
+            if(enumHandler.getScoreMap().get(card.getScore())== maxScore) {
+                numPlayerMaxCard +=1;
+            }
+        });
+        return numPlayerMaxCard;
+    }
+
+    //the method getMaxScorePlayer returns the Player who has played the card with highest score
+    public Player getMaxScorePlayer (int maxScore, Map<Player, Card> map) {
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if(enumHandler.getScoreMap().get(entry.getValue().getScore()) == maxScore) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    //the method getMaxNumCard returns the highest number between all the cards in a map
+    //this map is passed as a parameter to the method
+    public int getMaxNumCard(Map<Player, Card> map) {
+        int  maxNumCard=0;
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if ((enumHandler.getNumberMap().get(entry.getValue().getNum()))- maxNumCard > 0) {
+                maxNumCard = enumHandler.getNumberMap().get(entry.getValue().getNum());
+            }
+        }
+        return maxNumCard;
+    }
+
+    //the method getMaxNumPlayer returns the Player who has played the card with highest number
+    public Player getMaxNumPlayer (int maxNum, Map<Player, Card> map) {
+        for (Map.Entry<Player, Card> entry : map.entrySet()) {
+            if(enumHandler.getNumberMap().get(entry.getValue().getNum()) == maxNum) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
 

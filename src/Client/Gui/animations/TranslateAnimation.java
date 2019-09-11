@@ -8,6 +8,7 @@ public class TranslateAnimation implements BriscolaAnimation{
    private Node node;
    private TranslateTransition translateTransition;
 
+        //constructor
         public TranslateAnimation(Node node, double toX, double toY, Duration duration){
             this.node = node;
             translateTransition = new TranslateTransition();
@@ -17,7 +18,8 @@ public class TranslateAnimation implements BriscolaAnimation{
             translateTransition.setDuration(duration);
         }
 
-    public TranslateTransition getTranslateTransition() {
+        //getter method
+        public TranslateTransition getTranslateTransition() {
         return translateTransition;
     }
 

@@ -78,18 +78,6 @@ public class GameGui {
         return controlLabel;
     }
 
-    public ImageView getMyLeft() {
-        return myLeft;
-    }
-
-    public ImageView getMyCenter() {
-        return myCenter;
-    }
-
-    public ImageView getMyRight() {
-        return myRight;
-    }
-
     public ImageView getDeck() {
         return deck;
     }
@@ -101,6 +89,7 @@ public class GameGui {
     public Label getDeckLabel() {
         return deckLabel;
     }
+
 
     //GameGui constructor
     public GameGui() throws IOException {
@@ -559,5 +548,4 @@ public class GameGui {
         else if (idCard==1) myCenter.setImage(null);
         else if (idCard==2) myRight.setImage(null);
     }
-
 }

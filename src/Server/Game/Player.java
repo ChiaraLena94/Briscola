@@ -43,6 +43,8 @@ public class Player extends UnicastRemoteObject implements PlayerInterface {
         return points;
     }
 
+
+
     public void addPoints(int points) {
         this.points += points;
     }

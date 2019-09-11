@@ -1,6 +1,5 @@
 package Client.Gui;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +15,9 @@ public class MainGui extends Application {
         launch(args);
     }
 
+    public static Stage getPrimaryStage(){
+        return primaryStage;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -27,10 +29,7 @@ public class MainGui extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Resources/retroCarta.png")));
         primaryStage.setResizable(false);
         primaryStage.show();
-
     }
 
-    public static Stage getPrimaryStage(){
-        return primaryStage;
-    }
+
 }

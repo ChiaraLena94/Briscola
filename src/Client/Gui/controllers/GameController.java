@@ -110,6 +110,8 @@ public class GameController implements Initializable {
     @FXML
     public Label teamAdv4;
 
+
+    //initialization methods
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         hand= Client.getInstance().getHand();
@@ -162,6 +164,42 @@ public class GameController implements Initializable {
         }
     }
 
+    private void initializeAdv1(String p) throws RemoteException {
+        nameAdv1.setText(p);
+        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
+            if (entry.getKey().equals(p)) {
+                teamAdv1.setText(entry.getValue());
+            }
+        }
+        adv1Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv1Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv1Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+    }
+
+    private void initializeAdv3(String p) throws RemoteException {
+        nameAdv3.setText(p);
+        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
+            if (entry.getKey().equals(p)) {
+                teamAdv3.setText(entry.getValue());
+            }
+        }
+        adv3Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv3Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv3Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+    }
+
+    private void initializeAdv4(String p) throws RemoteException {
+        nameAdv4.setText(p);
+        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
+            if (entry.getKey().equals(p)) {
+                teamAdv4.setText(entry.getValue());
+            }
+        }
+        adv4Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv4Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+        adv4Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
+    }
+
     private String getRightAdvNameForThreePlayers(int pos) {
         playerList.add(playerList.get(0));
         playerList.add(playerList.get(1));
@@ -200,6 +238,9 @@ public class GameController implements Initializable {
             }
         }
     }
+
+
+
 
     private void setNumOfCardsInDeck() throws RemoteException {
         if (Client.getInstance().getPlayerList().size()==3 ) {
@@ -278,56 +319,10 @@ public class GameController implements Initializable {
         else myRight.setImage(null);
     }
 
-    private void initializeAdv1(String p) throws RemoteException {
-        nameAdv1.setText(p);
-        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
-            if (entry.getKey().equals(p)) {
-                teamAdv1.setText(entry.getValue());
-            }
-        }
-        adv1Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv1Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv1Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-    }
 
-    private void initializeAdv3(String p) throws RemoteException {
-        nameAdv3.setText(p);
-        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
-            if (entry.getKey().equals(p)) {
-                teamAdv3.setText(entry.getValue());
-            }
-        }
-        adv3Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv3Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv3Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-    }
 
-    private void initializeAdv4(String p) throws RemoteException {
-        nameAdv4.setText(p);
-        for (Map.Entry<String, String> entry : Client.getInstance().getPlayerInterface().getplayersTeam().entrySet()) {
-            if (entry.getKey().equals(p)) {
-                teamAdv4.setText(entry.getValue());
-            }
-        }
-        adv4Left.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv4Center.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-        adv4Right.setImage(new Image(getClass().getResourceAsStream("../Resources/retroCarta.png")));
-    }
 
-    private void initializeOtherAdv() {
-        try {
-            if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()>2) {
-                initializeAdv3(playerList.get(1));
-                if (Client.getInstance().getPlayerInterface().getNumPlayersInGame()==4){
-                    initializeAdv4(playerList.get(2));
-                }
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-    }
-
+    //zoom animation methods
     public void zoomImageLeft(MouseEvent mouseEvent){
         myLeft.setOnMouseEntered(e -> {
             new ScaleAnimation(myLeft,1.75,1.75, Duration.millis(300)).playAnimation();

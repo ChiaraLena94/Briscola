@@ -8,9 +8,10 @@ import javafx.util.Duration;
 public class FadeAnimation implements BriscolaAnimation{
 
     private Node node;
-
     private FadeTransition fadeTransition;
 
+
+    //constructor
     public FadeAnimation(Node node, double from, double to, Duration duration) {
         this.node = node;
         fadeTransition = new FadeTransition();
@@ -20,10 +21,12 @@ public class FadeAnimation implements BriscolaAnimation{
         fadeTransition.setDuration(duration);
     }
 
+    //getter method
     public FadeTransition getFadeTransition() {
         return fadeTransition;
     }
 
+    @Override
     public void playAnimation() {
         fadeTransition.play();
     }

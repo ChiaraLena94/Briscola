@@ -9,6 +9,7 @@ public class ScaleAnimation implements BriscolaAnimation{
     private ScaleTransition scaleTransition;
     private Duration duration;
 
+    //constructor
     public ScaleAnimation(Node node, double x, double y, Duration duration){
         this.node = node;
         this.duration = duration;
@@ -19,6 +20,7 @@ public class ScaleAnimation implements BriscolaAnimation{
         scaleTransition.setToY(y);
     }
 
+    //getter method
     public ScaleTransition getScaleTransition() {
         return scaleTransition;
     }
