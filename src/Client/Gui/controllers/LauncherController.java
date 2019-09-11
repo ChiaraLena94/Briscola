@@ -12,7 +12,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -96,7 +95,5 @@ public class LauncherController implements Initializable {
     public void play (ActionEvent actionEvent) throws IOException {
         loginGui.createLoginGui();
     }
-
-
 
 }

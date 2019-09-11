@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -71,21 +70,15 @@ public class LoginController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Dialog");
             alert.setHeaderText("ERROR");
-            alert.setContentText("You have to choose the number of players first!");
+            alert.setContentText("Devi prima scegliere il numero di giocatori!");
             alert.showAndWait();
         }
     }
 
     private boolean usernameEmpty() {
-        System.out.println("sono in username empty e username è: " + username.getText());
         if(username.getText().equals(null))
             return true;
         return false;
-    }
-
-
-        @Override
-    public void initialize(URL location, ResourceBundle resources) {
     }
 
     public void submitChoice (ActionEvent actionEvent) {
@@ -101,5 +94,9 @@ public class LoginController implements Initializable {
         } else if (choice4.isSelected()) {
             numPlayers = 4;
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }

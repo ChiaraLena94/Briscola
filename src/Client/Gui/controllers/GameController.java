@@ -113,7 +113,6 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         hand= Client.getInstance().getHand();
-        System.out.println("stampo la mappa: "+hand.values());
         myLeft.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(((Card) hand.get(0)).getId()))));
         myCenter.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(((Card) hand.get(1)).getId()))));
         myRight.setImage(new Image(getClass().getResourceAsStream("../Resources/"+cardPathLoader.getPath(((Card) hand.get(2)).getId()))));
@@ -214,16 +213,9 @@ public class GameController implements Initializable {
     }
 
     private void addFirstListener() {
-        System.out.println("sono in game controller e sono entrato in add first listener");
-        try {
-            System.out.println("stampo il primo giocatore: "+Client.getInstance().getPlayerList().get(0)+ "e io sono il giocatore"+Client.getInstance().getUsername());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
         try {
             if (Client.getInstance().getUsername().equals(Client.getInstance().getPlayerList().get(0))) {
-                controlLabel.setText("TOCCA A TE!");
+                controlLabel.setText("TOCCA A TE");
                 scaleUp = new ScaleAnimation(controlLabel, 1.3, 1.3, Duration.millis(1000.0));
                 scaleDown = new ScaleAnimation(controlLabel, 1, 1, Duration.millis(1000.0));
                 scaleUp.playAnimation();

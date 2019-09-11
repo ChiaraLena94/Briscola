@@ -20,9 +20,9 @@
                 <Font name="Rockwell" size="24.0" />
             </font>
         </Button>
-      <Label alignment="CENTER" layoutX="210.0" layoutY="269.0" text="Insert your username" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
+      <Label alignment="CENTER" layoutX="210.0" layoutY="269.0" text="Inserisci il tuo username" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
          <font>
-            <Font name="Rockwell" size="36.0" />
+            <Font name="Rockwell" size="32.0" />
          </font>
       </Label>
       <TextField fx:id="username" alignment="CENTER" layoutX="256.0" layoutY="334.0" prefHeight="57.0" prefWidth="206.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" />
@@ -38,7 +38,7 @@
          <font>
             <Font name="Rockwell" size="14.0" />
          </font></RadioButton>
-      <Label layoutX="150.0" layoutY="416.0" text="Choose the number of players" textFill="WHITE">
+      <Label layoutX="150.0" layoutY="416.0" text="Scegli il numero di giocatori" textFill="WHITE">
          <font>
             <Font name="Rockwell" size="18.0" />
          </font>

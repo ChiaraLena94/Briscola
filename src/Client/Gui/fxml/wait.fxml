@@ -13,7 +13,7 @@
             <Image url="@../Resources/buffering.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="215.0" layoutY="119.0" text="Waiting for other players">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="215.0" layoutY="119.0" text="In attesa degli altri giocatori">
          <font>
             <Font name="Rockwell" size="36.0" />
          </font>
